@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="65px" height="65px" viewBox="0 0 65 65" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>backArrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="32.5" cy="32.5" r="32.5"></circle>
+        <polyline id="path-2" points="37.0138889 18.9583333 22.5694444 32.9469209 37.0138889 46.7426977"></polyline>
+    </defs>
+    <g id="Sign-up-[PERSONAL]" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-42.000000, -93.000000)">
+        <g id="backArrow" transform="translate(42.000000, 93.000000)">
+            <g id="Oval-5">
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <circle stroke="#ADADAD" stroke-width="1.35" cx="32.5" cy="32.5" r="31.825"></circle>
+            </g>
+            <g id="Path-4">
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-2"></use>
+                <path stroke="#3C424F" stroke-width="1.95000005" d="M36.0388889,21.2598378 L23.9759854,32.9420442 L36.0388889,44.4632297 L36.0388889,21.2598378 Z"></path>
+            </g>
+        </g>
+    </g>
+</svg>

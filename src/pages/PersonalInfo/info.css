@@ -1,0 +1,117 @@
+.loginDone {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
+    height: 100vh;
+    font-family: 'Montserrat', sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+
+.logo_svg {
+    width: 70px;
+    margin: 25px;
+}
+
+header {
+    height: 100px;
+    width: 100%
+}
+
+header svg {
+    display: block;
+    margin: 30px auto;
+    width: 30px;
+}
+
+.content {
+    flex: 1;
+    text-align: center;
+    width: 50%;
+    margin-top: -10px;
+}
+
+.pageTitle {
+    margin-bottom: 28px;
+    font-family: Montserrat;
+    font-size: 18px;
+    color: #3C424F;
+    letter-spacing: 1.03px;
+    width: 100%;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.submit_btn {
+    background: #00DF91;
+    margin: 10px auto;
+    padding: 8px 95px;
+    font-size: 14px;
+    font-family: Montserrat;
+    font-weight: 100;
+    border: none;
+    border-radius: 90px;
+    color: #FFFFFF;
+    letter-spacing: 0.85px;
+}
+
+.footer {
+    position: relative;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 20px;
+    background: #F6F8FE;
+    color: #ffffff;
+}
+
+.footer__copy,
+.footer__copy a {
+    font-family: gilroy;
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: 0.32px;
+    color: #8C8C8C;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.footer__help {
+    color: #8C8C8C;
+    cursor: pointer;
+    font-family: gilroy;
+    font-size: 12px;
+    letter-spacing: 0.32px;
+    line-height: 1.5;
+    transition: border 0.3s ease-in-out;
+}
+
+.submit_btn {
+    background: #00DF91;
+    margin: 10px auto;
+    padding: 8px 95px;
+    font-size: 14px;
+    font-family: Montserrat;
+    font-weight: 100;
+    border: none;
+    border-radius: 90px;
+    color: #FFFFFF;
+    letter-spacing: 0.85px;
+}

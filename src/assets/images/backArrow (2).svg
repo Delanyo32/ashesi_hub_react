@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="67px" height="67px" viewBox="0 0 67 67" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>backArrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Sign-up-[PERSONAL]" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-41.000000, -92.000000)">
+        <g id="backArrow" transform="translate(42.000000, 93.000000)" fill="#FFFFFF" stroke="#ADADAD" stroke-width="1.35">
+            <path d="M32.5,65 C50.4492544,65 65,50.4492544 65,32.5 C65,14.5507456 50.4492544,0 32.5,0 C14.5507456,0 0,14.5507456 0,32.5 C0,50.4492544 14.5507456,65 32.5,65 Z M37.0138889,18.9583333 L22.5694444,32.9469209 L37.0138889,46.7426977" id="Combined-Shape"></path>
+        </g>
+    </g>
+</svg>

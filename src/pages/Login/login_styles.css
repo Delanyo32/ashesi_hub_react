@@ -1,0 +1,61 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: 'Montserrat', sans-serif !important;
+    margin: 0;
+    background-image: url('./bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.loginForm {
+    flex: 1 0 0;
+    width: 70%;
+    align-self: flex-start;
+    float: left;
+    display: flex;
+    align-items: center;
+    margin-left: 8%;
+}
+
+.logo_svg {
+    width: 70px;
+    text-align: center;
+    margin: 25px;
+}
+
+.submit_button {
+    border: none;
+    padding: 10px 32px;
+    background: #ffffff4a;
+    border-radius: 90px;
+    font-family: gilroy;
+    font-weight: 900;
+    font-size: 19px;
+    height: 44px;
+    color: #FFFFFF;
+    letter-spacing: 0.85px;
+    float: left;
+}
+
+.submit_button:hover {
+    background: #00DF91;
+}
+
+.form {
+    display: block;
+    margin-top: 0;
+}

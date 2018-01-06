@@ -1,0 +1,105 @@
+.group {
+    position: relative;
+    margin-bottom: 35px;
+}
+
+.group__input,
+input[type=password].group__input,
+textarea.group__input {
+    padding: 10px 10px 5px 5px;
+    font-size: 18px;
+    line-height: 0.8;
+    border: none;
+    width: 100%;
+    border-bottom: 2px solid #DEDEDE;
+    color: #3C424F;
+}
+
+.group__input:focus {
+    outline: none;
+    border-bottom: 2px solid #00Df91;
+}
+
+.bar {
+    width: 100%;
+}
+
+.group__label {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    transition: 0.2s ease all;
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 14px;
+    color: #B5B5B5;
+}
+
+
+/* BOTTOM BARS ================================= */
+
+.bar:before,
+.bar:after {
+    content: '';
+    height: 2px;
+    background: #00DF91;
+}
+
+
+/* personalInfo inpur active state */
+
+input:focus~.bar:before,
+input:focus~.bar:after {
+    width: 50%;
+}
+
+
+/* personalInfo active state - labels */
+
+input:focus~.group__label,
+input:valid~.group__label,
+
+/* textarea:valid~.group__label, */
+
+textarea:focus~.group__label {
+    top: -15px;
+    font-size: 12px;
+    color: #00DF91;
+}
+
+
+/* WIDTHS ================================= */
+
+.group {
+    flex-basis: 100%;
+}
+
+.group-30 {
+    width: 25%;
+}
+
+.group-70 {
+    width: 65%;
+}
+
+.group.group-30,
+.group.group-70 {
+    display: inline-block;
+}
+
+.group.group-30 {
+    float: left;
+    flex-basis: 25%;
+}
+
+.group.group-70 {
+    float: right;
+    flex-basis: 65%;
+}
+
+input.pseudo-drop {
+    width: 100%;
+    margin-top: 7px;
+    border: none;
+    border-bottom: 2px solid #DEDEDE;
+}

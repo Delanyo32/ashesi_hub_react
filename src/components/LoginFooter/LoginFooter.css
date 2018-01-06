@@ -1,0 +1,34 @@
+.footer {
+    position: relative;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 20px;
+    background-color: #0000005c;
+    color: #ffffff;
+}
+
+.footer__copy,
+.footer__copy a {
+    font-family: gilroy;
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: 0.32px;
+    color: #fff;
+}
+
+p.footer__help {
+    cursor: pointer;
+    font-family: gilroy;
+    font-size: 12px;
+    letter-spacing: 0.32px;
+    line-height: 1.5;
+    transition: border 0.3s ease-in-out
+}
+
+p.footer__help:hover {
+    /* color: #00DF91; */
+    border-bottom: 3px solid #fff;
+}
