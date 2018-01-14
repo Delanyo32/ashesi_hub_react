@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import css from './Dropdown_sm.css';
+import css from './DropdownSm.css';
 
 
-class Dropdown_sm extends Component {
+class DropdownSm extends Component {
 
     renderList(options){
         const list = options.map((item) => {
@@ -29,4 +29,4 @@ class Dropdown_sm extends Component {
     }
 }
 
-export default Dropdown_sm;
+export default DropdownSm;

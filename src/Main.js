@@ -4,22 +4,29 @@ import SignUp from './pages/SignUp/SignUp'
 import Login from './pages/Login/Login'
 import Info from './pages/PersonalInfo/info'
 import DoneSignUp from './pages/DoneSignUp/doneSignUp'
+import ProjectInformation from './pages/ProjectInformation/ProjectInformation'
 
 
-// The Main component renders one of the three provided
-// Routes (provided that one matches). Both the /roster
-// and /schedule routes will match any pathname that starts
-// with /roster or /schedule. The / route will only match
-// when the pathname is exactly the string "/"
-const Main = () => (
-  <main>
-    <Switch>
-      <Route exact path='/' component={Login}/>
-      <Route path='/signUp' component={SignUp}/>
-      <Route path='/info' component={Info}/>
-      <Route path='/done' component={DoneSignUp}/>
-    </Switch>
-  </main>
-)
+
+class Main extends React.Component{
+
+  //
+  render(){
+    //console.log(this.props.stitch)
+    const page = (
+      <main>
+        <Switch>
+          <Route exact path='/' render={(props) => <Login {...props} stitch={this.props.stitch}/>}/>
+          <Route path='/signUp' render={(props) => <SignUp {...props} stitch={this.props.stitch}/>}/>
+          <Route path='/info'  render={(props) => <Info {...props} stitch={this.props.stitch}/>}/>
+          <Route path='/done'  render={(props) => <DoneSignUp {...props} stitch={this.props.stitch}/>}/>
+          <Route path='/projectInformation'  render={(props) => <ProjectInformation {...props} stitch={this.props.stitch}/>}/>
+        </Switch>
+      </main>
+    )
+    return page
+  }
+}
+
 
 export default Main

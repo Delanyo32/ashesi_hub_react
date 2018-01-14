@@ -4,8 +4,9 @@ import Main from './Main'
 
 class App extends Component {
   render() {
+    // console.log(this.props.client)
     return (
-      <Main />
+      <Main stitch={this.props.client} />
     );
   }
 }

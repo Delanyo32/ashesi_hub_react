@@ -66,7 +66,7 @@ header svg {
     justify-content: space-between;
     align-items: flex-end;
     padding: 0 20px;
-    background-color: #0000005c;
+    background: #F6F8FE;
     color: #ffffff;
 }
 
@@ -76,7 +76,7 @@ header svg {
     font-weight: 900;
     font-size: 12px;
     letter-spacing: 0.32px;
-    color: #fff;
+    color: #8C8C8C;
 }
 
 p.footer__help {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import css from './TextInput_sm.css';
+import css from './TextInputSm.css';
 
 
-class TextInput_sm extends Component {
+class TextInputSm extends Component {
     
   render() {
     return (
@@ -17,4 +17,4 @@ class TextInput_sm extends Component {
   }
 }
 
-export default TextInput_sm;
+export default TextInputSm;
