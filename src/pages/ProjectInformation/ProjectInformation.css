@@ -9,7 +9,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 header {
@@ -28,6 +28,11 @@ header svg {
     text-align: center;
     width: 50%;
     margin-top: -10px;
+    /* overflow-x: scroll;
+    overflow-y: auto; */
+    /* max-height: 90%; */
+    padding: 0 50px;
+    box-sizing: content-box;
 }
 
 .pageTitle {
@@ -47,7 +52,7 @@ header svg {
 
 .submit_btn {
     background: #00DF91;
-    margin: 10px auto;
+    margin: 50px auto;
     padding: 8px 95px;
     font-size: 14px;
     font-family: Montserrat;
@@ -96,4 +101,13 @@ p.footer__help:hover {
 .logo_svg {
     width: 70px;
     margin: 25px;
+}
+
+.link {
+    margin: 5px;
+    font-weight: 600;
+    color: rgb(83, 143, 255);
+    text-decoration: none;
+    width: 100%;
+    text-align: left;
 }

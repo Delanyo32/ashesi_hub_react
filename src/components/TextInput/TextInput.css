@@ -6,7 +6,7 @@
 .group__input,
 input[type=password].group__input,
 textarea.group__input {
-    padding: 10px 17px 5px 16px;
+    padding: 10px 10px 5px 5px;
     font-size: 18px;
     line-height: 0.8;
     border: none;

@@ -12,7 +12,8 @@ textarea.group__input {
     border: none;
     width: 100%;
     border-bottom: 2px solid #DEDEDE;
-    color: #3C424F;
+    color: #61646a;
+    font-family: Montserrat;
 }
 
 .group__input:focus {
@@ -58,9 +59,7 @@ input:focus~.bar:after {
 
 input:focus~.group__label,
 input:valid~.group__label,
-
-/* textarea:valid~.group__label, */
-
+textarea:valid~.group__label,
 textarea:focus~.group__label {
     top: -15px;
     font-size: 12px;

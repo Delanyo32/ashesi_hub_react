@@ -4,15 +4,123 @@ import TextInput from '../../components/TextInput/TextInput'
 import Dropdown from '../../components/Dropdown/Dropdown';
 import DropdownSm from '../../components/DropdownSm/DropdownSm';
 import TextInputSm from '../../components/TextInputSm/TextInputSm';
-import TextArea from '../../components/TextArea/TextArea';
+import { ToastContainer, toast } from 'react-toastify';
 
 class Info extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            fullName: '',
+            country: '',
+            address: '',
+            major: '',
+            year:'',
+            phone:'',
+            gpa:''
+        };
+        
+        this.handleFullNameChange = this.handleFullNameChange.bind(this);
+        this.handleCountryChange = this.handleCountryChange.bind(this);
+        this.handleAddressChange = this.handleAddressChange.bind(this);
+        this.handleMajorChange = this.handleMajorChange.bind(this);
+        this.handleYearChange = this.handleYearChange.bind(this);
+        this.handlePhoneChange = this.handlePhoneChange.bind(this);
+        this.handleGPAChange = this.handleGPAChange.bind(this);
+    }
+
+    handleFullNameChange(text) {
+        this.setState({
+            fullName: text
+        });
+    }
+
+    handleCountryChange(text) {
+        this.setState({
+            country: text
+        });
+    }
+    handleAddressChange(text) {
+        this.setState({
+            address: text
+        });
+    }
+
+    handlePhoneChange(text) {
+        this.setState({
+            phone : text
+        });
+    }
+
+
+    handleYearChange(text) {
+        this.setState({
+            year: text
+        });
+    }
+    handleGPAChange(text) {
+        this.setState({
+            gpa: text
+        });
+    }
+
+    handleMajorChange(text) {
+        this.setState({
+            major : text
+        });
+    }
+
+    error = (text) => toast.error(text);
+    success = (text) => toast.success(text)
+
+    // componentDidMount() {
+    //     this.userFilledInfo()
+    // }
+
+
+    userFilledInfo(){
+        let db  = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
+
+        let users = db.collection("users");
+        const { history } = this.props;
+
+        users.find({"owner_id":this.props.stitch.authedId()},null).execute().then((data)=>{
+            if(data[0]){
+                history.push('/dashboard')
+            }
+            
+        })
+    }
+
+
+    sendData(){
+        const { history } = this.props;
+        let db  = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
+
+        let users = db.collection("users");
+
+        let obj = this.state
+
+        obj["owner_id"]=this.props.stitch.authedId()
+
+        //console.log(obj)
+
+        users.insertOne(obj).then(() => { 
+            console.log("inserted:")
+            history.push('/projectInformation')
+
+         })
+         .catch(err=>{
+            this.error(err.error)
+         })
+
+    }
 
 
     render() {
                 const page = (
                     <div className={info_css.loginDone}>
-        
+                    <ToastContainer/>
                         <header>
                             <a href=".">
                                 <svg className={info_css.logo_svg} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 41">
@@ -35,16 +143,14 @@ class Info extends React.Component {
                             <form className={info_css.form}action="">
         
         
-                            <TextInput label="Full Name"/> 
-                            <TextInput label="Country of Citizenship"/> 
-                            <TextInput label="Residential Address"/> 
-                            {/* <TextArea label="area code"/> */}
-                            <DropdownSm label="Major" options={["CS","BA","MA","EE","MIS"]}/>
-                            <Dropdown label="Expected year of Graduation" options={[2021,2020,2019,2018]}/>
-                            <TextInputSm label="phone #"/>
-                            <Dropdown label="is your GPA geater than 2.3?"  options={["yes","no"]}/>
-                             
-                                <input id="submit" className={info_css.submit_btn}type="submit" value="continue" />
+                            <TextInput label="Full Name" onInputTextChange={this.handleFullNameChange} /> 
+                            <TextInput label="Country of Citizenship" onInputTextChange={this.handleCountryChange} /> 
+                            <TextInput label="Residential Address"  onInputTextChange={this.handleAddressChange}/> 
+                            <DropdownSm label="Major" options={["CS","BA","MA","EE","MIS"]} onInputOptionChange={this.handleMajorChange} />
+                            <Dropdown label="Expected year of Graduation" options={[2021,2020,2019,2018]}  onInputOptionChange={this.handleYearChange}/>
+                            <TextInputSm label="phone #" onInputTextChange={this.handlePhoneChange}/>
+                            <Dropdown label="is your GPA geater than 2.3?"  options={["yes","no"]} onInputOptionChange={this.handleGPAChange}/>
+                            <input id="submit" className={info_css.submit_btn} type="button" value="continue" onClick={() => this.sendData()}   />
                             </form>
                         </div>
         
@@ -58,7 +164,6 @@ class Info extends React.Component {
                     </div>
                 )
                     return page
-            
     }
 }
 

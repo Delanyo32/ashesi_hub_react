@@ -37,9 +37,7 @@ class SignUp extends React.Component {
     }
 
     error = (text) => toast.error(text);
-    success = (text) => toast(text, {
-        onClose: ({foo}) => window.location.href = "http://localhost:3000/"
-    });
+    success = (text) => toast.success(text)
 
     signUp() {
         

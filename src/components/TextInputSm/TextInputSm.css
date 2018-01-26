@@ -18,6 +18,7 @@ textarea.group__input {
     width: 100%;
     border-bottom: 2px solid #DEDEDE;
     color: #3C424F;
+    font-family: Montserrat
 }
 
 .group__input:focus {

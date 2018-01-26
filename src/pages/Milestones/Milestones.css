@@ -1,0 +1,242 @@
+/**
+ * Milestone Styles
+ */
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700');
+.loginDone {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* height: 100vh; */
+    font-family: 'Montserrat', sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+
+.group {
+    flex-basis: 100%;
+}
+
+#content-personalInfo {
+    width: 50%;
+    margin-top: -10px;
+}
+
+.group_50 {
+    width: 25%;
+    margin-bottom: 40px;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.logo_svg {
+    width: 70px;
+    margin: 25px;
+}
+
+.milestoneTab {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.milestoneTab__span {
+    font-size: 15px;
+    color: #A0A0A0;
+    letter-spacing: 0.86px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.active {
+    font-weight: 600;
+    text-decoration: underline
+}
+
+.milestoneTab__span:hover {
+    color: #58c7ff;
+}
+
+.header__dashboard {
+    background: #f6f8fe;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 100px;
+}
+
+.header__dashboard__profile {
+    padding-right: 20px;
+    text-align: right;
+}
+
+.header__dashboard__profile_name {
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: bold;
+    color: #3c424f;
+    letter-spacing: 0;
+    margin: 0;
+}
+
+.header__dashboard__profile_email {
+    font-family: Montserrat;
+    font-weight: lighter;
+    font-size: 14px;
+    color: #3c424f;
+    letter-spacing: 0;
+}
+
+.underdashheader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px 25px;
+    margin-bottom: 0px;
+}
+
+.underdashheader__title {
+    font-family: Montserrat;
+    font-size: 23px;
+    font-weight: 900;
+    color: #58c7ff;
+    letter-spacing: 0;
+    padding-left: 20px;
+}
+
+.underdashheader__section__projinfo {
+    padding-right: 20px;
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 20px;
+    color: #b5b5b5;
+    letter-spacing: 0;
+}
+
+.underdashheader__section__projinfo:hover {
+    text-decoration: none;
+    color: #00df91;
+    cursor: pointer;
+}
+
+.underdashheader__section__active {
+    color: #00df91;
+}
+
+.milestoneTitle {
+    width: 100%;
+    padding: 0 45px;
+    margin-left: 42px;
+    margin-bottom: 50px;
+}
+
+.milestoneTitle__self {
+    font-family: Montserrat;
+    font-weight: normal;
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #3C424F;
+    letter-spacing: 0;
+}
+
+.milestoneTitle__free {
+    font-family: Montserrat;
+    font-size: 18px;
+    color: #575757;
+    letter-spacing: 0;
+}
+
+.milestoneTitle__free_sub {
+    font-family: Montserrat;
+    font-weight: lighter;
+    font-size: 13px;
+    color: #B5B5B5;
+    letter-spacing: 0.69px;
+}
+
+.footer {
+    position: relative;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 20px;
+    background-color: #F6F8FE;
+    color: #ffffff;
+}
+
+.footer__copy,
+.footer__copy a {
+    font-family: gilroy;
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: 0.32px;
+    color: #3C424F;
+}
+
+p.footer__help {
+    cursor: pointer;
+    font-family: gilroy;
+    font-size: 12px;
+    letter-spacing: 0.32px;
+    line-height: 1.5;
+    color: #3C424F;
+    transition: border 0.3s ease-in-out
+}
+
+p.footer__help:hover {
+    /* color: #00DF91; */
+    border-bottom: 3px solid #fff;
+}
+
+.group__input,
+input[type=password].group__input,
+textarea.group__input {
+    padding: 10px 17px 5px 16px;
+    font-size: 18px;
+    line-height: 0.8;
+    border: none;
+    width: 100%;
+    border-bottom: 2px solid #DEDEDE;
+    color: #61646a;
+    font-family: Montserrat;
+}
+
+.group__input:focus {
+    outline: none;
+    border-bottom: 2px solid #00Df91;
+}
+
+.group__label,
+textarea.group__label {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    transition: 0.2s ease all;
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 14px;
+    color: #B5B5B5;
+}
+
+.header__dashboard__profile_logout {
+    color: #00df91;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.header__dashboard__profile_logout:hover {
+    text-decoration: underline;
+}

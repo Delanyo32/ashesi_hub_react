@@ -6,7 +6,7 @@
 .group__input,
 input[type=password].group__input,
 textarea.group__input {
-    padding: 10px 10px 5px 5px;
+    padding: 10px 17px 5px 16px;
     font-size: 18px;
     line-height: 0.8;
     border: none;
@@ -420,4 +420,17 @@ label.inputfileLabel {
 .group_50 {
     width: 45%;
     flex-basis: 45%;
+}
+
+.submit_btn {
+    background: #00DF91;
+    margin: 10px auto;
+    padding: 8px 95px;
+    font-size: 14px;
+    font-family: Montserrat;
+    font-weight: 100;
+    border: none;
+    border-radius: 90px;
+    color: #FFFFFF;
+    letter-spacing: 0.85px;
 }

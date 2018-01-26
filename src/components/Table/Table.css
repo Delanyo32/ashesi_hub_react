@@ -1,0 +1,133 @@
+/* Table ================================= */
+
+.content {
+    flex: 1;
+    text-align: center;
+    width: 50%;
+    margin-top: -10px;
+    margin-bottom: 40px;
+}
+
+.table__heading {
+    font-weight: lighter;
+    background: #D8D8D8;
+    font-size: 16px;
+    color: #FFFFFF;
+    letter-spacing: 0.86px;
+}
+
+.table__heading:first-child {
+    padding: 10px 0;
+    background: #58C7FF;
+}
+
+.table__desc {
+    background: rgb(241, 241, 241);
+    font-size: 13px;
+    padding: 12px 0;
+    color: #3C424F;
+    letter-spacing: 0.69px;
+}
+
+.table__row {
+    margin-bottom: 2px;
+}
+
+.table__row :hover {
+    background-color: #61646a;
+    color: white;
+    cursor: pointer;
+}
+
+.tableContent__update {
+    text-align: left;
+    font-size: 14px;
+    color: #3C424F;
+    letter-spacing: 0.78px;
+}
+
+span.tableContent__update_sub {
+    display: block;
+    font-family: Montserrat;
+    font-weight: lighter;
+    text-align: left;
+    font-size: 12px;
+    color: #3C424F;
+    letter-spacing: 0.69px;
+    margin-bottom: 30px;
+}
+
+#tableContent__updateInput {
+    float: left;
+}
+
+button.update__btn {
+    cursor: pointer;
+    padding: 10px 30px;
+    border: none;
+    color: #fff;
+    font-size: 13px;
+    font-weight: lighter;
+    margin-top: 20px;
+    text-align: left;
+    background: #00DF91;
+    box-shadow: 0 6px 14px 0 rgba(37, 233, 164, 0.57);
+    border-radius: 100px;
+    transition: 0.3s box-shadow ease-in-out;
+    float: left;
+}
+
+button.update__btn:hover {
+    box-shadow: none;
+}
+
+.milestoneTab__table {
+    background: #fff;
+    margin-top: 30px;
+}
+
+.milestoneTab__table_self {
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.group_50 {
+    width: 25%;
+    margin-bottom: 40px;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.group__input,
+input[type=password].group__input,
+textarea.group__input {
+    padding: 10px 17px 5px 16px;
+    font-size: 18px;
+    line-height: 0.8;
+    border: none;
+    width: 100%;
+    border-bottom: 2px solid #DEDEDE;
+    color: #61646a;
+    font-family: Montserrat;
+}
+
+.group__input:focus {
+    outline: none;
+    border-bottom: 2px solid #00Df91;
+}
+
+.group__label,
+textarea.group__label {
+    position: relative;
+    top: 0px;
+    left: 5px;
+    transition: 0.2s ease all;
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 14px;
+    color: #B5B5B5;
+}

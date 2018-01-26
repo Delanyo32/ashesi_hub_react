@@ -33,54 +33,73 @@ class Login extends React.Component {
         })
     }
 
+    componentDidMount() {
+        if (this.props.stitch.authedId()) {
+            this.props.stitch.logout()
+            console.log("logged out")
+        }
+
+    }
+
+
     errormodal = (text) => toast.error(text);
 
     login() {
-    // this.props.stitch.logout()
-       
-        
-        this.props.stitch.login(this.state.email, this.state.password,{})
+        // 
+        const { history } = this.props;
+
+        this.props.stitch.login(this.state.email, this.state.password, {})
             .then((userId) => {
                 console.log("Successfully logged in as user", userId);
-            })
-            .catch((error) => {
-                console.log("Error logging in with email/password auth:", error.error);
-                this.errormodal(error.error)
-            });
-    }
+                let db  = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
+                let users = db.collection("users");
+                    users.find({ "owner_id": userId}, null).execute().then((data) => {
+                        console.log(data[0])
+                        if (data[0]) {
+                            history.push('/dashboard')
+                        }else{
+                            history.push('/info')
+                        }
+                    })  
+                })
+                    .catch((error) => {
+                        console.log("Error logging in with email/password auth:", error.error);
+                        this.errormodal(error.error)
+                    });
+            }
 
 
     render() {
-       // this.props.stitch.auth.providers.userpass.sendEmailConfirm('delanyo.aborchie@dreamoval.com')
-        console.log(this.props.stitch)
+                // this.props.stitch.auth.providers.userpass.sendEmailConfirm('delanyo.aborchie@dreamoval.com')
+                console.log(this.props.stitch)
         const page = (
-              
-            <div className={styles.body}>
-            <ToastContainer />
-                <header>
-                    <a href=".">
-                        <img src={logo} className={styles.logo_svg} alt="logo" />
-                    </a>
-                </header>
 
-                <div className={styles.loginForm}>
-                    <form  className={styles.form}>
-                        <LoginInput value={this.state.email} label="email" onInputTextChange={this.handleEmailChange} />;
+                    <div className={styles.body}>
+                        <ToastContainer />
+                        <header>
+                            <a href=".">
+                                <img src={logo} className={styles.logo_svg} alt="logo" />
+                            </a>
+                        </header>
+
+                        <div className={styles.loginForm}>
+                            <form className={styles.form}>
+                                <LoginInput value={this.state.email} label="email" onInputTextChange={this.handleEmailChange} />;
                         <span className={styles.signupText}>no account yet? <a className={styles.signupText__link} href='/signUp'>sign up</a></span>
-                        <LoginInput value={this.state.password} label="password" onInputTextChange={this.handlePasswordChange} />;
-                        <input id="submit" className={styles.submit_button} type="button" value="Begin"  onClick={() => this.login()}></input>
-                    </form>
-                </div>
-                <LoginFooter />
-            </div>
-        )
+                                <LoginInput value={this.state.password} label="password" onInputTextChange={this.handlePasswordChange} />;
+                        <input id="submit" className={styles.submit_button} type="button" value="Begin" onClick={() => this.login()}></input>
+                            </form>
+                        </div>
+                        <LoginFooter />
+                    </div>
+                )
 
         return page
 
-    }
+            }
 
 }
 
 
 
-export default Login
+    export default Login

@@ -1,13 +1,198 @@
 import React from 'react'
 import projectinfo from './ProjectInformation.css'
 import TextInput from '../../components/TextInput/TextInput'
-import Dropdown from '../../components/Dropdown/Dropdown';
-import DropdownSm from '../../components/DropdownSm/DropdownSm';
-import TextInputSm from '../../components/TextInputSm/TextInputSm';
 import TextArea from '../../components/TextArea/TextArea';
 import MultiDataForm from '../../components/MultiDataForm/MultiDataForm'
+import MDF from '../../components/MDF/MDF'
+import GroupHeader from '../../components/GroupHeader/GroupHeader'
 
 class ProjectInformation extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            projectTitle: '',
+            projectSynopsis: '',
+            projectLeads:[{
+                id:0,
+                name: '',
+                role: '',
+                motivation:'',
+                file:''
+            }],
+            targetCommunity:[{
+                id:0,
+                community: '',
+                population: '',
+                need:'',
+            }],
+            communityEngagement: '',
+            communityAssets:'',
+            communityApproach:'',
+            communityNeed:'',
+            objeciveDescription:'',
+            objectiveTarget:'',
+            challenges:'',
+            volunteerRoles:'',
+            volunteerNumbers:'',
+            volunteerSource:'',
+            externalPartners:'',
+            communitySharing:'',
+            preference:''
+
+        };
+
+        this.handleProjectTitleChange = this.handleProjectTitleChange.bind(this);
+        this.handleProjectSynopsisChange = this.handleProjectSynopsisChange.bind(this);
+        this.handleProjectLeadChange = this.handleProjectLeadChange.bind(this)
+        this.handleTargetCommunityChange = this.handleTargetCommunityChange.bind(this)
+        this.handleCommunityEngagementChange = this.handleCommunityEngagementChange.bind(this)
+        this.handleCommunityAssetsChange = this.handleCommunityAssetsChange.bind(this)
+        this.handleCommunityApproachChange = this.handleCommunityApproachChange.bind(this)
+        this.handlecommunityNeedChange = this.handlecommunityNeedChange.bind(this)
+        this.handleObjeciveDescriptionChange  =  this.handleObjeciveDescriptionChange.bind(this)
+        this.handleObjectiveTargetChange = this.handleObjectiveTargetChange.bind(this)
+        this.handleChallengesChange = this.handleChallengesChange.bind(this)
+        this.handleVolunteerRolesChange = this.handleVolunteerRolesChange.bind(this)
+        this.handleVolunteerNumbersChange = this.handleVolunteerNumbersChange.bind(this)
+        this.handleVolunteerSourceChange = this.handleVolunteerSourceChange.bind(this)
+        this.handleExternalPartnersChange = this.handleExternalPartnersChange.bind(this)
+        this.handleCommunitySharingChange = this.handleCommunitySharingChange.bind(this)
+        this.handlePreferenceChange = this.handlePreferenceChange.bind(this)
+
+    }
+
+
+    
+    handleProjectTitleChange(text) {
+        this.setState({
+            projectTitle: text
+        });
+    }
+
+    handleProjectSynopsisChange(text) {
+        this.setState({
+            projectSynopsis: text
+        });
+    }
+
+    handleProjectLeadChange(array) {
+        this.setState({
+            projectLeads: array
+        });
+    }
+
+    handleTargetCommunityChange(array) {
+        this.setState({
+            targetCommunity: array
+        });
+    }
+
+    handleCommunityEngagementChange(text) {
+        this.setState({
+            communityEngagement: text
+        });
+    }
+
+    handleCommunityAssetsChange(text) {
+        this.setState({
+            communityAssets: text
+        });
+    }
+
+    handleCommunityApproachChange(text) {
+        this.setState({
+            communityApproach: text
+        });
+    }
+
+    handlecommunityNeedChange(text) {
+        this.setState({
+            communityNeed: text
+        });
+    }
+
+    
+    handleObjeciveDescriptionChange(text) {
+        this.setState({
+            objeciveDescription: text
+        });
+    }
+
+    handleObjectiveTargetChange(text) {
+        this.setState({
+            objectiveTarget: text
+        });
+    }
+
+    handleChallengesChange(text) {
+        this.setState({
+            challenges: text
+        });
+    }
+
+    handleVolunteerRolesChange(text) {
+        this.setState({
+            volunteerRoles: text
+        });
+    }
+
+    handleVolunteerNumbersChange(text) {
+        this.setState({
+            volunteerNumbers: text
+        });
+    }
+
+    handleVolunteerSourceChange(text) {
+        this.setState({
+            volunteerSource: text
+        });
+    }
+
+    handleExternalPartnersChange(text) {
+        this.setState({
+            externalPartners: text
+        });
+    }
+
+    handleCommunitySharingChange(text) {
+        this.setState({
+            communitySharing: text
+        });
+    }
+
+    handlePreferenceChange(text) {
+        this.setState({
+            preference: text
+        });
+    }
+
+
+
+
+    sendData(){
+        const { history } = this.props;
+        let db  = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
+
+        let users = db.collection("projects");
+
+        let obj = this.state
+
+        obj["owner_id"]=this.props.stitch.authedId()
+
+        //console.log(obj)
+
+        users.insertOne(obj).then(() => { 
+            console.log("inserted:")
+            history.push('/dashboard')
+
+         })
+         .catch(err=>{
+            console.log(err.error)
+         })
+
+    }
+
 
     render() {
                 const page = (
@@ -35,23 +220,54 @@ class ProjectInformation extends React.Component {
                             <form className={projectinfo.form}action="">
         
         
-                            <TextInput label="Project Title"/> 
-                            <TextArea label="Project Synopsis"/>
-                            {/* <TextInput label="Residential Address"/>  */}
-                            {/* <TextArea label="area code"/> */}
-                            <MultiDataForm/>   
+                            <TextInput label="Project Title" onInputTextChange={this.handleProjectTitleChange}/> 
+                            <TextArea label="Project Synopsis" onInputTextChange={this.handleProjectSynopsisChange}/>
+                            <MultiDataForm data={this.state.projectLeads} stitch={this.props.stitch} onProjectLeadChange={this.handleProjectLeadChange}/>  
+                            <MDF data={this.state.targetCommunity} onTargetCommunityChange={this.handleTargetCommunityChange}/> 
+                            <GroupHeader label="Community Research"/>
+                            <TextArea label="Have you engaged with Community members" onInputTextChange={this.handleCommunityEngagementChange}/>
+                            <TextArea label="Which community assets can you leverage or Strenghten" onInputTextChange={this.handleCommunityAssetsChange} />
+                            <TextArea label="What is your approach to addressing community need" onInputTextChange={this.handlecommunityNeedChange}/>
+
+                            <GroupHeader label="Objectives"/>
+                            <TextArea label="What are the objectives of the project?" onInputTextChange={this.handleObjeciveDescriptionChange} />
+                            <TextArea label="How will you know you have met these objectives?" onInputTextChange={this.handleObjectiveTargetChange}/>
+
+
+                            <GroupHeader label="Challenges"/>
+                            <TextArea label="What do you see as plausible impediments?" onInputTextChange={this.handleChallengesChange}/>
+
+                            
+                            <GroupHeader label="Volunteers"/>
+                            <TextArea label="What are the volunteer roles needed to execute this project?" onInputTextChange={this.handleVolunteerRolesChange}/>
+                            <TextArea label="How many volunteers are to execute this project?" onInputTextChange={this.handleVolunteerNumbersChange}/>
+                            <TextArea label="Where do you plan on sourcing volunteers from?" onInputTextChange={this.handleVolunteerSourceChange} />
+                            <TextArea label="List any external partener organization" onInputTextChange={this.handleExternalPartnersChange}/>
+
+                            <GroupHeader label="Ashesi Community"/>
+                            <TextArea label="Share your plan for sharing your success with the Ashesi Community" onInputTextChange={this.handleCommunitySharingChange}/>
+                            <TextArea label="Why should we pick this project over others?" onInputTextChange={this.handlePreferenceChange}/>
+
+                            <GroupHeader label="Please download and fill the following (instrctions in the template)"/>
+                            <a className={projectinfo.link} href="">Project Timeline and Budget Template</a>
+                            <a className={projectinfo.link} href="">Simple Statement of Recommmendation</a>
+
+                            
                              
-                                <input id="submit" className={projectinfo.submit_btn}type="submit" value="continue" />
+                            <input id="submit" className={projectinfo.submit_btn}type="button" value="continue" onClick={() => this.sendData()}  />
+                                
                             </form>
                         </div>
-        
+                        
+                       
+{/*         
                         <footer className={projectinfo.footer}>
                             <p className={projectinfo.footer__copy}> &copy; 2017
                                 <a href=".">Raphael</a> &amp;
                                 <a href=".">Delanyo</a>
                             </p>
                             <p className={projectinfo.footer__help}> help </p>
-                        </footer>
+                        </footer> */}
                     </div>
                 )
 

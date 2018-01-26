@@ -1,0 +1,97 @@
+/* accordion ================================= */
+
+.accordionBox__title {
+    font-family: Montserrat;
+    font-size: 20px;
+    color: #3C424F;
+    letter-spacing: 0.99px;
+    text-align: left;
+    margin-top: 50px;
+}
+
+.accordionBox__self {
+    overflow: hidden;
+    height: 56px;
+    margin-bottom: 10px;
+}
+
+.active {
+    height: 500px;
+}
+
+.accordionBox__self__text {
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    text-align: left;
+    background: #B5B5B5;
+    color: #fff;
+    padding: 15px 0 15px 50px;
+    margin: 0;
+    box-shadow: 0 2px 4px 0 rgba(169, 169, 169, 0.50);
+    z-index: 2;
+}
+
+.accordionBox__self:hover .accordionBox__self__text,
+.accordionBox__self.active .accordionBox__self__text {
+    background: #58C7FF;
+}
+
+.accordionBox__self p {
+    margin-bottom: 0;
+}
+
+.accordionBox__self__text::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 23px;
+    height: 23px;
+    background-image: url('./accord.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.accordionBox__self__content {
+    transition: all 0.3s;
+    text-align: left;
+    background: #EFEFEF;
+    margin-bottom: 30px;
+    font-family: Montserrat;
+    color: #3C424F;
+    font-size: 15px;
+    letter-spacing: 0.86px;
+    padding: 30px 50px;
+    transform: translateY(-500px);
+}
+
+.accordionBox__self__content p {
+    margin-bottom: 15px;
+}
+
+.accordionBox__self__content span {
+    letter-spacing: 0.69px;
+    font-weight: lighter;
+}
+
+.accordionBox__self.active .accordionBox__self__content {
+    transform: translateY(0);
+}
+
+.accordionBox__self_update {
+    font-family: Montserrat;
+    font-size: 16px;
+    color: #58c7ff;
+    letter-spacing: 0;
+    cursor: pointer;
+    display: block;
+    text-align: right;
+    width: auto;
+}
+
+.accordionBox__self_update:hover {
+    text-decoration: underline;
+}

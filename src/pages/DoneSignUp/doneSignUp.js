@@ -3,47 +3,33 @@ import done_css from './doneSignUp.css'
 import { ToastContainer, toast } from 'react-toastify';
 
 class DoneSignUp extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            idPassed: false,
-        };
-    }
-
     
     errormodal = (text) => toast.error(text);
 
-    componentDidMount() {
-        if(this.verify()){
-            this.setState({
-                idPassed:true
-            })
-        }
+    start(){
+        const { history } = this.props;
+        history.push('/info')
     }
 
     verify() {
+        const { history } = this.props;
         const params = new URLSearchParams(this.props.location.search);
         const token = params.get('token'); 
         const tokenId = params.get('tokenId'); 
         console.log(tokenId,token)
-        let response = false
 
         this.props.stitch.auth.provider('userpass').emailConfirm(tokenId,token)
             .then(() => {
-                console.log("Successfully confirmed email address!");
-                response =  true
+               return this.rederPage()
             })
             .catch(err => {
-                this.errormodal(err.error);
-                response =  false
+                //this.errormodal(err.error);
+                history.push('/')
+                return null
             });
-
-            return response;
     }
 
     rederPage(){
-        if(this.state.idPassed){
             const page = (
                 <div className={done_css.loginDone}>
                 <ToastContainer />
@@ -82,7 +68,7 @@ class DoneSignUp extends React.Component {
                         </div>
                         <div className="sectionTwo">
                             <p className={done_css.sectionTwo__text}>To start a project, please click here :</p>
-                            <button className={done_css.sectionTwo__btn}> Get Started </button>
+                            <button className={done_css.sectionTwo__btn} onClick={this.start()}>Get Started</button>
                         </div>
                     </div>
     
@@ -101,21 +87,10 @@ class DoneSignUp extends React.Component {
             )
 
             return page
-        }
-        else{
-            const failed = (
-                <div> 
-                <ToastContainer />
-                    <p>No token passed</p>
-                    <a href=".">Go to login</a>
-                </div>
-                
-            )
-            return failed
-        }
     }
 
     render() {
+        
         const page = this.rederPage()
         
         return page
