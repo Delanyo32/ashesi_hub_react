@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import css from './MultiDataForm.css';
 import add from '../../assets/images/addArrow.png'
-import { BSON } from 'mongodb-extjson';
+//import  BSON  from 'mongodb-extjson';
 
 
 class MultiDataForm extends Component {
@@ -30,6 +30,21 @@ class MultiDataForm extends Component {
     this.handlePropsChange(newArray)
   }
 
+//   const client = new stitch.StitchClient('hub-rnabd');
+//   const formatted = 
+//   client.login('eric.daniels@mongodb.com', 'mypassword').then(() =>
+//     client.executeServiceFunction("storageContainer", "put",{
+// "body": {'$binary': {'base64': "", "subType": "00"}},
+// "contentType": "application/pdf",
+// "acl": "public-read",
+// "bucket": "ashesihub",
+// "key":"eric-test-cv.pdf"
+// }).then((data)=>{
+//     console.log(data)
+//     })
+//   )
+
+
   storeCV(file,item){
 
     var fileReader = new FileReader();
@@ -37,18 +52,20 @@ class MultiDataForm extends Component {
     let s3 = this.props.stitch
 
     
-    console.log( file[0])
+    //console.log( file[0])
 
     fileReader.onload = function () {
         var data = fileReader.result;
-        //var array = new Int8Array(data);
-        let body = new BSON.Binary(data, BSON.BSON_BINARY_SUBTYPE_DEFAULT)
+        var formatted = data.replace("data:application/pdf;base64,","")
+        var filename = item.name + "_cv.pdf"
+       //console.log(formatted)
+      
         s3.executeServiceFunction("storageContainer", "put",{
-            "body": data,
-            "contentType": file[0].type,
+            "body": {'$binary': {'base64': formatted, "subType": "00"}},
+            "contentType": "application/pdf",
             "acl": "public-read",
             "bucket": "ashesihub",
-            "key":item.name+"-cv.pdf"
+            "key": filename
         }).then((data)=>{
             console.log(data)
             item.file = data.location
@@ -57,15 +74,7 @@ class MultiDataForm extends Component {
         
     };
 
-    // fileReader.onload = (readerEvt) =>{
-    //     console.log(readerEvt)
-    //     var binaryString = readerEvt.target.result;
-    //     var data = binaryString
-    //     let body = new BSON.Binary(data, BSON.BSON_BINARY_SUBTYPE_DEFAULT)
-    // };
-
-
-    fileReader.readAsBinaryString(file[0]);
+    fileReader.readAsDataURL(file[0]);
 
 
 }
