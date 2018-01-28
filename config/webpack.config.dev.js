@@ -143,6 +143,7 @@ module.exports = {
             test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
+            exclude: /node_modules\/(?!(mongodb-extjson|bson))/,
             options: {
               
               // This is a feature of `babel-loader` for webpack (not Babel itself).
