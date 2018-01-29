@@ -3,12 +3,22 @@ import done_css from './doneSignUp.css'
 import { ToastContainer, toast } from 'react-toastify';
 
 class DoneSignUp extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.verify = this.verify.bind(this);
+
+    }
     
     errormodal = (text) => toast.error(text);
 
     start(){
         const { history } = this.props;
         history.push('/')
+    }
+
+    componentDidMount() {
+        this.verify()
     }
 
     verify() {
@@ -19,12 +29,12 @@ class DoneSignUp extends React.Component {
         console.log(tokenId,token)
 
         this.props.stitch.auth.provider('userpass').emailConfirm(tokenId,token)
-            .then(() => {
-               return this.rederPage()
+            .then((data) => {
+               console.log(data)
             })
             .catch(err => {
-                //this.errormodal(err.error);
-                history.push('/')
+                this.errormodal(err.error);
+                //history.push('/')
                 return null
             });
     }
