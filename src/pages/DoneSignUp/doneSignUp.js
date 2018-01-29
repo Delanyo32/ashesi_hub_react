@@ -8,7 +8,7 @@ class DoneSignUp extends React.Component {
 
     start(){
         const { history } = this.props;
-        history.push('/info')
+        history.push('/')
     }
 
     verify() {
@@ -67,8 +67,8 @@ class DoneSignUp extends React.Component {
                             <p>You have successfully completed the signup process.</p>
                         </div>
                         <div className="sectionTwo">
-                            <p className={done_css.sectionTwo__text}>To start a project, please click here :</p>
-                            <button className={done_css.sectionTwo__btn} onClick={this.start()}>Get Started</button>
+                            <p className={done_css.sectionTwo__text}>You need to Login to start: Click here</p>
+                            <button className={done_css.sectionTwo__btn} onClick={()=>{this.start()}}>Get Started</button>
                         </div>
                     </div>
     
