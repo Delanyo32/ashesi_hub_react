@@ -72,7 +72,7 @@ class Dashboard extends React.Component {
     }
     userFilledInfo(){
 
-        const { history } = this.props;
+      //  const { history } = this.props;
 
 
     }

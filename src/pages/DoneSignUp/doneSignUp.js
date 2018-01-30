@@ -22,7 +22,7 @@ class DoneSignUp extends React.Component {
     }
 
     verify() {
-        const { history } = this.props;
+        //const { history } = this.props;
         const params = new URLSearchParams(this.props.location.search);
         const token = params.get('token'); 
         const tokenId = params.get('tokenId'); 

@@ -50,7 +50,7 @@ class Milestones extends React.Component {
         var currentMilestone = Object.assign({}, this.state.milestoneData)
         if(updateData.type==="budget"){
             if(currentMilestone.moneySpent){
-                currentMilestone.moneySpent=(parseInt(currentMilestone.moneySpent)+parseInt(updateData.value)).toString()
+                currentMilestone.moneySpent=(parseInt(currentMilestone.moneySpent,10)+parseInt(updateData.value,10)).toString()
                 
             }else{
                 currentMilestone["moneySpent"]=updateData.value
@@ -58,7 +58,7 @@ class Milestones extends React.Component {
             }
         }else if(updateData.type==="lives"){
             if(currentMilestone.currentlivesAffected){
-                currentMilestone.currentlivesAffected = (parseInt(currentMilestone.currentlivesAffected)+parseInt(updateData.value)).toString()
+                currentMilestone.currentlivesAffected = (parseInt(currentMilestone.currentlivesAffected,10)+parseInt(updateData.value,10)).toString()
                 
             }else{
                 currentMilestone["currentlivesAffected"]=updateData.value
@@ -66,7 +66,7 @@ class Milestones extends React.Component {
             } 
         }else if(updateData.type==="target"){
             if(currentMilestone.targets[updateData.targetIndex].currentTargetValue){
-                currentMilestone.targets[updateData.targetIndex].currentTargetValue = (parseInt(currentMilestone.targets[updateData.targetIndex].currentTargetValue)+parseInt(updateData.value)).toString()
+                currentMilestone.targets[updateData.targetIndex].currentTargetValue = (parseInt(currentMilestone.targets[updateData.targetIndex].currentTargetValue,10)+parseInt(updateData.value,10)).toString()
                 
             }else{
                 currentMilestone.targets[updateData.targetIndex]["currentTargetValue"]=updateData.value
@@ -83,9 +83,10 @@ class Milestones extends React.Component {
 
 
     renderTabs(){
-        
+        var mileData = {}
+        var data  = []
         if(this.state.selectedTab==="milestone"){
-            var mileData = {}
+            
             mileData["key"] = this.state.milestoneData.milestone
             if(this.state.milestoneData.moneySpent){
                 mileData["current"]=this.state.milestoneData.moneySpent
@@ -93,12 +94,12 @@ class Milestones extends React.Component {
                 mileData["current"] = "0"
             }
             mileData["value"] = this.state.milestoneData.milestoneBudget
-            var data  = []
+           
             data.push(mileData)
             return <Table label="Milestone Budget" data={data} onMilestoneUpdate={this.handleMilestoneUpdate}/>
         }
         if(this.state.selectedTab==="affected"){
-            var mileData = {}
+            
             mileData["key"] = this.state.milestoneData.impactUnit
             if(this.state.milestoneData.currentlivesAffected){
                 mileData["current"] = this.state.milestoneData.currentlivesAffected
@@ -106,14 +107,12 @@ class Milestones extends React.Component {
                 mileData["current"] = "0"
             }
             mileData["value"] = this.state.milestoneData.impactLives
-            var data  = []
             data.push(mileData)
             return <Table label="Lives to Affect" data={data} onMilestoneUpdate={this.handleMilestoneUpdate}/>
         }
         if(this.state.selectedTab==="targets"){
-            var data  = []
             this.state.milestoneData.targets.forEach(target => {
-                var mileData = {}
+               
                 mileData["key"] = target.targetUnit
                 if(target.currentTargetValue){
                     mileData["current"] = target.currentTargetValue
