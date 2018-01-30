@@ -70,7 +70,7 @@ class Login extends React.Component {
 
 
     render() {
-                //this.props.stitch.auth.providers.userpass.sendEmailConfirm('akacquaah@gmail.com').catch((error)=>{console.log(error.error)})
+                //this.props.stitch.auth.providers.userpass.sendEmailConfirm('atoacquaah@yahoo.com').catch((error)=>{console.log(error.error)})
                 console.log(this.props.stitch)
         const page = (
 
