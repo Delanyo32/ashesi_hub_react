@@ -152,8 +152,8 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,
-            //exclude: /node_modules\/(?!(mongodb-extjson|bson))/,
-            include: paths.appSrc,
+            exclude: /node_modules\/(?!(mongodb-extjson|bson))/,
+            //include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
               compact: true,
