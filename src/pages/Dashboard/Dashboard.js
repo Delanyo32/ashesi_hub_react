@@ -46,12 +46,9 @@ class Dashboard extends React.Component {
     findMilestones(){
         let db  = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
 
-        let projects = db.collection("projects");
+        let user = db.collection("users");
         
-
-        projects.find({"owner_id":this.props.stitch.authedId()},null).execute().then((data)=>{
-
-            
+        user.find({"owner_id":this.props.stitch.authedId()},null).execute().then((data)=>{
             if(data[0].milestones){
                 this.setState({
                     milestones:data[0].milestones
@@ -95,24 +92,24 @@ class Dashboard extends React.Component {
     sendData(){
         let db  = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
 
-        let projects = db.collection("projects");
+        let users = db.collection("users");
         
 
-        projects.find({"owner_id":this.props.stitch.authedId()},null).execute().then((data)=>{
-            let project = data[0]
+        users.find({"owner_id":this.props.stitch.authedId()},null).execute().then((data)=>{
+            let user_data = data[0]
 
             let milestones  = null
 
-            if(project.milestones){
-                milestones = project.milestones
+            if(user_data.milestones){
+                milestones = user_data.milestones
             }else{
                 milestones = []
             }
             
             milestones.push(this.state.milestoneData)
-            project["milestones"] = milestones
+            //project["milestones"] = milestones
 
-            projects.updateOne({ _id: project._id }, { $set: { milestones: milestones } }).then(() => { 
+            users.updateOne({ owner_id: this.props.stitch.authedId() }, { $set: { milestones: milestones } }).then(() => { 
                 this.findMilestones()
              } );
         });

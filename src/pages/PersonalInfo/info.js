@@ -12,21 +12,21 @@ class Info extends React.Component {
         super(props);
         this.state = {
             fullName: '',
-            country: '',
+            project: {},
             address: '',
             major: '',
             year:'',
             phone:'',
-            gpa:''
+            applicationStatus:''
         };
         
         this.handleFullNameChange = this.handleFullNameChange.bind(this);
-        this.handleCountryChange = this.handleCountryChange.bind(this);
+        this.handleProjectNameChange = this.handleProjectNameChange.bind(this);
         this.handleAddressChange = this.handleAddressChange.bind(this);
         this.handleMajorChange = this.handleMajorChange.bind(this);
         this.handleYearChange = this.handleYearChange.bind(this);
         this.handlePhoneChange = this.handlePhoneChange.bind(this);
-        this.handleGPAChange = this.handleGPAChange.bind(this);
+        this.handleApplyForFundsChange = this.handleApplyForFundsChange.bind(this);
     }
 
     handleFullNameChange(text) {
@@ -35,14 +35,14 @@ class Info extends React.Component {
         });
     }
 
-    handleCountryChange(text) {
-        this.setState({
-            country: text
-        });
-    }
     handleAddressChange(text) {
         this.setState({
             address: text
+        });
+    }
+    handleProjectNameChange(text) {
+        this.setState({
+            project: {projectName:text}
         });
     }
 
@@ -58,9 +58,9 @@ class Info extends React.Component {
             year: text
         });
     }
-    handleGPAChange(text) {
+    handleApplyForFundsChange(text) {
         this.setState({
-            gpa: text
+            applicationStatus: text
         });
     }
 
@@ -86,7 +86,7 @@ class Info extends React.Component {
 
         users.find({"owner_id":this.props.stitch.authedId()},null).execute().then((data)=>{
             if(data[0]){
-                history.push('/dashboard')
+                history.push('/activities')
             }
             
         })
@@ -107,7 +107,12 @@ class Info extends React.Component {
 
         users.insertOne(obj).then(() => { 
             console.log("inserted:")
-            history.push('/projectInformation')
+            if(this.state.applicationStatus==="yes"){
+                history.push('/projectInformation')
+            }else{
+                history.push('/activities')
+            }
+            
 
          })
          .catch(err=>{
@@ -137,19 +142,19 @@ class Info extends React.Component {
                         <div className={info_css.content}>
         
                             <h3 className={info_css.pageTitle}>
-                                Personal Information
+                                Project Information
                             </h3>
         
                             <form className={info_css.form}action="">
         
         
                             <TextInput label="Full Name" onInputTextChange={this.handleFullNameChange} /> 
-                            <TextInput label="Country of Citizenship" onInputTextChange={this.handleCountryChange} /> 
-                            <TextInput label="Residential Address"  onInputTextChange={this.handleAddressChange}/> 
+                            <TextInput label="Residential Address and Country of Citizenship" onInputTextChange={this.handleAddressChange} /> 
+                            <TextInput label="Project Name"  onInputTextChange={this.handleProjectNameChange}/> 
                             <DropdownSm label="Major" options={["CS","BA","MA","EE","MIS"]} onInputOptionChange={this.handleMajorChange} />
                             <Dropdown label="Expected year of Graduation" options={[2021,2020,2019,2018]}  onInputOptionChange={this.handleYearChange}/>
                             <TextInputSm label="phone #" onInputTextChange={this.handlePhoneChange}/>
-                            <Dropdown label="is your GPA geater than 2.3?"  options={["yes","no"]} onInputOptionChange={this.handleGPAChange}/>
+                            <Dropdown label="Do you want to Apply for funds?"  options={["yes","no"]} onInputOptionChange={this.handleApplyForFundsChange}/>
                             <input id="submit" className={info_css.submit_btn} type="button" value="continue" onClick={() => this.sendData()}   />
                             </form>
                         </div>

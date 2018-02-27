@@ -143,9 +143,10 @@ module.exports = {
             test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
-            exclude: /node_modules\/(?!(mongodb-extjson|bson))/,
             options: {
-              
+              "plugins": [
+                ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }] // `style: true` for less
+              ],
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
               // directory for faster rebuilds.

@@ -11,7 +11,6 @@ class Milestones extends React.Component {
             selectedTab:"milestone",
             milestoneData: {},
             milestones: [],
-            project:{},
             milestoneIndex:this.props.match.params.id
         };
 
@@ -30,19 +29,26 @@ class Milestones extends React.Component {
         this.getCurrentUser()
     }
 
-    updateData(milestones){
+    updateData(milestones, update){
         const { history } = this.props;
         let db = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
-        let projects = db.collection("projects");
-        var id = this.state.project._id
-        console.log(id)
+        let users = db.collection("users");
 
-        projects.updateOne({ _id: id }, { $set: { milestones: milestones } }).then(() => {
-            console.log("done")
-            history.push("/dashboard")
-        })
-        .catch((error)=>{
-            console.log(error.error)
+        var updatesArray = []
+        users.find({ "owner_id": this.props.stitch.authedId() }, null).execute().then((data) => {
+            if(data[0].updates){
+                updatesArray = data[0].updates
+            }
+
+            updatesArray.push(update)
+
+            users.updateOne({ owner_id: this.state.user.owner_id }, { $set: { milestones: milestones , updates: updatesArray } }).then(() => {
+                console.log("done")
+                history.push("/dashboard")
+            })
+            .catch((error)=>{
+                console.log(error.error)
+            })
         })
     }
 
@@ -54,7 +60,6 @@ class Milestones extends React.Component {
                 
             }else{
                 currentMilestone["moneySpent"]=updateData.value
-                
             }
         }else if(updateData.type==="lives"){
             if(currentMilestone.currentlivesAffected){
@@ -73,10 +78,11 @@ class Milestones extends React.Component {
                 
             }
         }
-        var newMilestones = this.state.project.milestones.slice()
+        var newMilestones = this.state.user.milestones.slice()
         newMilestones[this.state.milestoneIndex]=currentMilestone
+        updateData["date_updated"] = Date.now()
 
-        this.updateData(newMilestones)
+        this.updateData(newMilestones,updateData)
 
     }
 
@@ -139,12 +145,12 @@ class Milestones extends React.Component {
 
     findMilestones() {
         let db = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
-        let projects = db.collection("projects");
-        projects.find({ "owner_id": this.props.stitch.authedId() }, null).execute().then((data) => {
+        let users = db.collection("users");
+        users.find({ "owner_id": this.props.stitch.authedId() }, null).execute().then((data) => {
             console.log(this.props.match.params.id)
             if (data[0].milestones && data[0].milestones[this.props.match.params.id]) {
                 this.setState({
-                    project:data[0]
+                    user:data[0]
                 })
                 this.setState({
                     milestoneData: data[0].milestones[this.state.milestoneIndex]
@@ -182,38 +188,9 @@ class Milestones extends React.Component {
     }
 
 
-
-
-    sendData() {
-        let db = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
-
-        let projects = db.collection("projects");
-
-        projects.find({ "owner_id": this.props.stitch.authedId() }, null).execute().then((data) => {
-            let project = data[0]
-
-            let milestones = null
-
-            if (project.milestones) {
-                milestones = project.milestones
-            } else {
-                milestones = []
-            }
-
-            milestones.push(this.state.milestoneData)
-            project["milestones"] = milestones
-
-            projects.updateOne({ _id: project._id }, { $set: { milestones: milestones } }).then(() => {
-                console.log(milestones)
-            });
-        });
-
-    }
-
     render() {
         const page = (
             <div className={css.loginDone}>
-
                 <header className={css.header__dashboard}>
                     <a href=".">
                         <svg className={css.logo_svg} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 41">

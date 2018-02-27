@@ -1,0 +1,21 @@
+.username {
+    color: white;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.logo {
+    height: 20px;
+}
+
+.header_text {
+    margin: 30px;
+}
+
+.layout {
+    display: flex;
+}
+
+.content {
+    flex: 1
+}

@@ -7,8 +7,6 @@ import LoginFooter from '../../components/LoginFooter/LoginFooter'
 import { ToastContainer, toast } from 'react-toastify';
 
 
-
-
 class Login extends React.Component {
 
     constructor(props) {

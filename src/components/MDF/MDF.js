@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import css from './MDF.css';
 import add from '../../assets/images/addArrow.png'
+import { Slider } from 'antd';
+
 
 
 class MDF extends Component {
@@ -19,7 +21,7 @@ class MDF extends Component {
       let object = {
         id:(this.props.data.length),
         community: '',
-        population: '',
+        population: [],
         need:'',
     }
 
@@ -32,6 +34,16 @@ class MDF extends Component {
 
 
 renderList(entries){
+    const marks = {
+        0: '0 years',
+        100: {
+          style: {
+            color: '#00DF91',
+          },
+          label: <strong>100 years</strong>,
+        },
+      };
+
     const list = entries.map((item) => {
         return (
                 <div className={css.piForm} key={item.id}>
@@ -43,10 +55,9 @@ renderList(entries){
                     </div>
 
                     <div className={css.group_50}>
-                        <input  className={css.group__input} type="text" onBlur={(e)=>{item.population=e.target.value}} required/>
-                        <div className={css.highlight}></div>
-                        <span className={css.bar}></span>
-                        <label className={css.group__label}>Population/Age Range</label>
+                        <h4>Population/Age Range</h4>
+                    <Slider range marks={marks} defaultValue={[0, 50]} onChange={(value)=>{item.population=value}} />
+                        {/* <label className={css.group__label}>Population/Age Range</label> */}
                     </div>
 
                     <div className={css.group}>

@@ -23,7 +23,7 @@ class ProjectInformation extends React.Component {
             targetCommunity:[{
                 id:0,
                 community: '',
-                population: '',
+                population: [],
                 need:'',
             }],
             communityEngagement: '',
@@ -174,22 +174,31 @@ class ProjectInformation extends React.Component {
         const { history } = this.props;
         let db  = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
 
-        let users = db.collection("projects");
+        
+        let users = db.collection("users");
 
         let obj = this.state
 
-        obj["owner_id"]=this.props.stitch.authedId()
+        //obj["owner_id"]=this.props.stitch.authedId()
 
         //console.log(obj)
 
-        users.insertOne(obj).then(() => { 
-            console.log("inserted:")
-            history.push('/dashboard')
+        users.find({"owner_id":this.props.stitch.authedId()},null).execute().then((data)=>{
+            var current_user = data[0]
+            current_user.project["applicationData"] = this.state
 
-         })
-         .catch(err=>{
-            console.log(err.error)
-         })
+            users.updateOne({ owner_id: this.props.stitch.authedId() }, { $set: { applicationData: this.state } })
+            .then(() => { 
+                console.log("inserted:")
+                history.push('/activities')
+             })
+             .catch(err=>{
+                console.log(err.error)
+             })
+            
+        })
+
+
 
     }
 
@@ -214,13 +223,13 @@ class ProjectInformation extends React.Component {
                         <div className={projectinfo.content}>
         
                             <h3 className={projectinfo.pageTitle}>
-                                Project Information
+                                Application Information
                             </h3>
         
                             <form className={projectinfo.form}action="">
         
         
-                            <TextInput label="Project Title" onInputTextChange={this.handleProjectTitleChange}/> 
+                            {/* <TextInput label="Project Title" onInputTextChange={this.handleProjectTitleChange}/>  */}
                             <TextArea label="Project Synopsis" onInputTextChange={this.handleProjectSynopsisChange}/>
                             <MultiDataForm data={this.state.projectLeads} stitch={this.props.stitch} onProjectLeadChange={this.handleProjectLeadChange}/>  
                             <MDF data={this.state.targetCommunity} onTargetCommunityChange={this.handleTargetCommunityChange}/> 
