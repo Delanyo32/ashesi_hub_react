@@ -54,7 +54,7 @@ class Login extends React.Component {
                     users.find({ "owner_id": userId}, null).execute().then((data) => {
                         console.log(data[0])
                         if (data[0]) {
-                            history.push('/dashboard')
+                            history.push('/activities')
                         }else{
                             history.push('/info')
                         }
