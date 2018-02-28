@@ -4,7 +4,7 @@ import { Row, Col } from 'antd';
 import { Avatar } from 'antd';
 import { Layout } from 'antd';
 import { Card } from 'antd';
-import { Button, Modal, Form, Input, InputNumber, DatePicker, Dropdown, Menu  } from 'antd';
+import { Button, Modal, Form, Input, InputNumber, DatePicker, Dropdown, Menu } from 'antd';
 const { Meta } = Card;
 const { Header, Footer, Content } = Layout;
 const FormItem = Form.Item;
@@ -150,30 +150,33 @@ class ActivitiesDashboard extends React.Component {
         });
     }
 
-    saveActivity=(activity)=>{
+    saveActivity = (activity) => {
         var randomID = require("random-id")
         activity["id"] = randomID()
-        
+
         var currentActivities = this.state.project.activities
         var newActivities = []
-        if(currentActivities){
+        if (currentActivities) {
             newActivities = currentActivities.slice()
         }
-        
+
         newActivities.push(activity)
 
-        var newProject = Object.assign({},this.state.project)
+        var newProject = Object.assign({}, this.state.project)
         newProject.activities = newActivities
 
-        let db  = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
+        this.props.stitch.then(stitch => {
+            let db = stitch.service("mongodb", "mongodb-atlas").db("hub");
 
-        let users = db.collection("users");
+            let users = db.collection("users");
 
-        users.updateOne({ owner_id: this.props.stitch.authedId() }, { $set: { project: newProject } }).then(() => { 
-            this.getInfo()
-         } );
+            users.updateOne({ owner_id: stitch.authedId() }, { $set: { project: newProject } }).then(() => {
+                this.getInfo()
+            });
+        })
 
-        
+
+
     }
 
 
@@ -182,29 +185,32 @@ class ActivitiesDashboard extends React.Component {
     }
 
     getInfo = () => {
-        if (this.props.stitch.authedId()) {
-            let db = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
-            let user = db.collection("users");
-            user.find({ "owner_id": this.props.stitch.authedId() }, null).execute().then((data) => {
-                if (data[0]) {
-                    var user = data[0]
-                    this.setState({
-                        project: user.project,
-                    })
-                    this.setState({
-                        userObject:user
-                    })
-                    localStorage.setItem('user',JSON.stringify(user))
-                }
-            });
+        this.props.stitch.then(stitch=>{
+            if (stitch.authedId()) {
+                let db = stitch.service("mongodb", "mongodb-atlas").db("hub");
+                let user = db.collection("users");
+                user.find({ "owner_id": stitch.authedId() }, null).execute().then((data) => {
+                    if (data[0]) {
+                        var user = data[0]
+                        this.setState({
+                            project: user.project,
+                        })
+                        this.setState({
+                            userObject: user
+                        })
+                        localStorage.setItem('user', JSON.stringify(user))
+                    }
+                });
+    
+            } else {
+                const { history } = this.props;
+                history.push(`/`)
+            }
+        })
 
-        }else{
-            const { history } = this.props;
-            history.push(`/`)
-        }
     }
 
-    goToActivityInformation=(id)=>{
+    goToActivityInformation = (id) => {
         const { history } = this.props;
         history.push(`/activities/${id}`)
     }
@@ -222,7 +228,7 @@ class ActivitiesDashboard extends React.Component {
                 return (
                     <Col span={8} key={item.id}>
                         <Card
-                            onClick={()=>{this.goToActivityInformation(item.id)}}
+                            onClick={() => { this.goToActivityInformation(item.id) }}
                             hoverable
                             style={{ width: 400 }}
                         >
@@ -230,7 +236,7 @@ class ActivitiesDashboard extends React.Component {
                                 title={item.activityName}
                                 description={item.activityDescription}
                             />
-                            
+
                         </Card>
                     </Col>
 
@@ -262,7 +268,7 @@ class ActivitiesDashboard extends React.Component {
                         </Col>
                         <Col span={12}>
                             <Row type="flex" justify="end">
-                                <Col span={12} style={{display:"flex",justifyContent:"flex-end"}}>
+                                <Col span={12} style={{ display: "flex", justifyContent: "flex-end" }}>
                                     <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>
                                         <a>
                                             <div className={styles.user_info}>
@@ -298,7 +304,7 @@ class ActivitiesDashboard extends React.Component {
                         </Col>
                         <Col span={21}>
                             <Row type="flex" justify="start" gutter={16}>
-                                
+
                                 {this.renderActivityCards()}
                             </Row>
                         </Col>

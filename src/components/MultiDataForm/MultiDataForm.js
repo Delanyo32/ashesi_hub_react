@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import css from './MultiDataForm.css';
 import add from '../../assets/images/addArrow.png'
+import { ToastContainer, toast } from 'react-toastify';
 //import  BSON  from 'mongodb-extjson';
 
 
@@ -15,6 +16,8 @@ class MultiDataForm extends Component {
     handlePropsChange(array) {
         this.props.onProjectLeadChange(array);
     } 
+    errormodal = (text) => toast.error(text);
+    success = (text) => toast.success(text)
 
     addField(){
       let object = {
@@ -49,8 +52,11 @@ class MultiDataForm extends Component {
   storeCV(file,item){
 
     var fileReader = new FileReader();
-    
-    let s3 = this.props.stitch
+
+    this.props.stitch.then(stitch=>{
+        
+    let s3 = stitch
+    let s = this
 
     
     //console.log( file[0])
@@ -68,15 +74,17 @@ class MultiDataForm extends Component {
             "bucket": "ashesihub",
             "key": filename
         }).then((data)=>{
-            console.log(data)
+            s.success("Upload Successful")
             item.file = data.location
-            console.log(item)
+            
         })
         
     };
 
     fileReader.readAsDataURL(file[0]);
 
+    })
+    
 
 }
 
@@ -86,6 +94,7 @@ renderList(entries){
     const list = entries.map((item) => {
         return (
                 <div className={css.piForm} key={item.id}>
+                    
                     <div className={css.group_50}>
                         <input  className={css.group__input} type="text" onBlur={(e)=>{item.name=e.target.value}} required/>
                         <div className={css.highlight}></div>
@@ -126,6 +135,7 @@ renderList(entries){
     return (
         <div>
             <div className={css.piForm}  action="" >
+            <ToastContainer />
                 <div className={css.groupHeading}>
                     <h4 className={css.groupHeading__title} data-tooltip="Click to add a project lead.">Project Lead Information</h4>     
                     <a onClick={()=>{this.addField()}}><img className={css.groupHeading__add} src={add} alt=""/></a>

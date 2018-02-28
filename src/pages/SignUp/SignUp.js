@@ -40,26 +40,29 @@ class SignUp extends React.Component {
     success = (text) => toast.success(text)
 
     signUp() {
-        
-        if(this.state.password === this.state.confirmPassword){
-            this.props.stitch.register(this.state.email, this.state.password)
-            .then(() => {
-                this.success("Successfully sent account confirmation email!");
+
+        if (this.state.password === this.state.confirmPassword) {
+            this.props.stitch.then(stitch => {
+                stitch.register(this.state.email, this.state.password)
+                    .then(() => {
+                        this.success("Successfully sent account confirmation email!");
+                    })
+                    .catch(error => {
+                        this.error(error.message);
+                    });
             })
-            .catch(error => {
-                this.error(error.error);
-            });
-            
-        }else{
-           this.error("Passwords do not match");
+
+
+        } else {
+            this.error("Passwords do not match");
         }
-       
+
     }
 
     render() {
         const page = (
             <div className={css.loginDone}>
-            <ToastContainer foo="bar" />
+                <ToastContainer foo="bar" />
                 <header>
                     <a href=".">
                         <svg className={css.logo_svg} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 41">
@@ -84,7 +87,7 @@ class SignUp extends React.Component {
                         <TextInput label="Password" onInputTextChange={this.handlePasswordChange} />
                         <TextInput label="Confirm Password" onInputTextChange={this.handleConfirmPasswordChange} />
 
-                        <input id="submit" className={css.submit_btn} type="button" value="Done"  onClick={() => this.signUp()} />
+                        <input id="submit" className={css.submit_btn} type="button" value="Done" onClick={() => this.signUp()} />
                     </form>
                 </div>
 

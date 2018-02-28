@@ -44,92 +44,100 @@ class ActivityPage extends React.Component {
         this.handleBeneficiariesChange = this.handleBeneficiariesChange.bind(this)
 
     }
-    doRefresh(){
-        let db = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
+    doRefresh() {
+        this.props.stitch.then(stitch => {
+            let db = stitch.service("mongodb", "mongodb-atlas").db("hub");
 
-        let users = db.collection("users");
+            let users = db.collection("users");
 
-        users.find({ "owner_id": this.props.stitch.authedId() }, null).execute().then((data) => {
-            if (data[0]) {
-                var user = data[0]
-                this.setState({
-                    project: user.project,
-                })
+            users.find({ "owner_id": stitch.authedId() }, null).execute().then((data) => {
+                if (data[0]) {
+                    var user = data[0]
+                    this.setState({
+                        project: user.project,
+                    })
 
-                this.setState({
-                    userObject: user
-                })
-                var activities = this.state.project.activities
-                var id = this.props.match.params.id
+                    this.setState({
+                        userObject: user
+                    })
+                    var activities = this.state.project.activities
+                    var id = this.props.match.params.id
 
-                var currentActivity = activities.find((element) => {
-                    return element.id == id
-                })
+                    var currentActivity = activities.find((element) => {
+                        return element.id == id
+                    })
 
-                this.setState({
-                    currentActivity: currentActivity
-                })
+                    this.setState({
+                        currentActivity: currentActivity
+                    })
 
-            }
+                }
+            })
         })
+
     }
 
     getProjectInformation = () => {
-        if (this.props.stitch.authedId()) {
+        this.props.stitch.then(stitch => {
 
-            if (localStorage.getItem('user')) {
-                var user = JSON.parse(localStorage.getItem('user'))
-                this.setState({
-                    project: user.project,
-                })
-                this.setState({
-                    userObject: user
-                })
-                console.log(user)
-                var activities = user.project.activities
-                var id = this.props.match.params.id
+            if (stitch.authedId()) {
 
-                var currentActivity = activities.find((element) => {
-                    return element.id == id
-                })
+                if (localStorage.getItem('user')) {
+                    var user = JSON.parse(localStorage.getItem('user'))
+                    this.setState({
+                        project: user.project,
+                    })
+                    this.setState({
+                        userObject: user
+                    })
+                    console.log(user)
+                    var activities = user.project.activities
+                    var id = this.props.match.params.id
 
-                this.setState({
-                    currentActivity: currentActivity
-                })
+                    var currentActivity = activities.find((element) => {
+                        return element.id == id
+                    })
+
+                    this.setState({
+                        currentActivity: currentActivity
+                    })
+                } else {
+                    let db = stitch.service("mongodb", "mongodb-atlas").db("hub");
+
+                    let users = db.collection("users");
+
+                    users.find({ "owner_id": stitch.authedId() }, null).execute().then((data) => {
+                        if (data[0]) {
+                            var user = data[0]
+                            this.setState({
+                                project: user.project,
+                            })
+
+                            this.setState({
+                                userObject: user
+                            })
+                            var activities = this.state.project.activities
+                            var id = this.props.match.params.id
+
+                            var currentActivity = activities.find((element) => {
+                                return element.id == id
+                            })
+
+                            this.setState({
+                                currentActivity: currentActivity
+                            })
+                            localStorage.setItem('user', JSON.stringify(user))
+                        }
+                    })
+                }
+
             } else {
-                let db = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
-
-                let users = db.collection("users");
-
-                users.find({ "owner_id": this.props.stitch.authedId() }, null).execute().then((data) => {
-                    if (data[0]) {
-                        var user = data[0]
-                        this.setState({
-                            project: user.project,
-                        })
-
-                        this.setState({
-                            userObject: user
-                        })
-                        var activities = this.state.project.activities
-                        var id = this.props.match.params.id
-
-                        var currentActivity = activities.find((element) => {
-                            return element.id == id
-                        })
-
-                        this.setState({
-                            currentActivity: currentActivity
-                        })
-                        localStorage.setItem('user',JSON.stringify(user))
-                    }
-                })
+                const { history } = this.props;
+                history.push(`/`)
             }
 
-        } else {
-            const { history } = this.props;
-            history.push(`/`)
-        }
+        })
+
 
     }
 
@@ -184,18 +192,22 @@ class ActivityPage extends React.Component {
         var newProject = Object.assign({}, this.state.project)
         newProject.activities = newActivities
 
-        let db = this.props.stitch.service("mongodb", "mongodb-atlas").db("hub");
+        this.props.stitch.then(stitch => {
+            let db = stitch.service("mongodb", "mongodb-atlas").db("hub");
 
-        let users = db.collection("users");
+            let users = db.collection("users");
 
-        users.updateOne({ owner_id: this.props.stitch.authedId() }, { $set: { project: newProject } }).then(() => {
-            this.doRefresh()
-        });
+            users.updateOne({ owner_id: stitch.authedId() }, { $set: { project: newProject } }).then(() => {
+                this.doRefresh()
+            });
+        })
+
+
 
 
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getProjectInformation()
     }
 

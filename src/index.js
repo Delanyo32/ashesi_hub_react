@@ -7,9 +7,13 @@ import registerServiceWorker from './registerServiceWorker';
 import { StitchClient } from "mongodb-stitch";
 import { BrowserRouter } from 'react-router-dom'
 
+import { StitchClientFactory } from 'mongodb-stitch'
 
-const stitch = require("mongodb-stitch")
-const client = new stitch.StitchClient('hub-rnabd');
+let appId = 'hub-rnabd';
+let client = StitchClientFactory.create(appId);
+
+// const stitch = require("mongodb-stitch")
+// const client = new stitch.StitchClient('hub-rnabd');
 
 
 ReactDOM.render((
