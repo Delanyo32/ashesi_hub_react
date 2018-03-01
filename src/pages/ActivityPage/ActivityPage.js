@@ -10,6 +10,7 @@ import SpendingComponent from '../../components/SpendingComponent/SpendingCompon
 import VolunteerComponent from '../../components/VolunteerComponent/VolunteerComponent'
 import UpdatesComponent from '../../components/UpdatesComponent/UpdatesComponent'
 import BeneficiariesComponent from '../../components/BeneficiariesComponent/BeneficiariesComponent'
+import CommentComponent from '../../components/CommentComponent/CommentComponent'
 const TabPane = Tabs.TabPane;
 const { Meta } = Card;
 const { Header, Footer, Content } = Layout;
@@ -70,6 +71,8 @@ class ActivityPage extends React.Component {
                     this.setState({
                         currentActivity: currentActivity
                     })
+
+                    localStorage.setItem('user', JSON.stringify(user))
 
                 }
             })
@@ -164,6 +167,25 @@ class ActivityPage extends React.Component {
         this.saveActivityUpdate(newActivitiy, "volunteer")
     }
 
+    handleCommentChange = (comment)=>{
+        var newcoment = {
+            comment:comment,
+            date:new Date().toDateString(),
+            userName:this.state.userObject.fullName,
+            timestamp:Date.now()
+        }
+        var commentsArray = []
+        if(this.state.currentActivity.comments){
+            commentsArray = this.state.currentActivity.comments.slice()
+        }
+        commentsArray.push(newcoment)
+
+        var newActivitiy = Object.assign({}, this.state.currentActivity)
+        newActivitiy.comments = commentsArray
+        this.saveActivityUpdate(newActivitiy, "comments")
+
+    }
+
 
     saveActivityUpdate = (activity, type) => {
         var currentActivities = this.state.project.activities
@@ -179,7 +201,7 @@ class ActivityPage extends React.Component {
 
         var update = {
             updateField: type,
-            updateDate: new Date,
+            updateDate: new Date(),
 
         }
 
@@ -214,7 +236,7 @@ class ActivityPage extends React.Component {
     render() {
 
         const page = (
-            <Layout className="layout" style={full_height}>
+            <Layout className="layout" style={full_height} >
                 <Header>
                     <Row>
                         <Col span={12}>
@@ -246,7 +268,7 @@ class ActivityPage extends React.Component {
                         </Col>
                     </Row>
                 </Header>
-                <Content className={styles.content}>
+                <Content className={styles.content} style={{backgroundColor:"#f0f2f5"}}>
                     <Row type="flex" justify="center">
                         <Col span={22}>
                             <div style={topM}></div>
@@ -263,6 +285,10 @@ class ActivityPage extends React.Component {
 
                                 <TabPane tab={<span><Icon type="smile-o" />Activity Beneficiaries</span>} key="4">
                                     <BeneficiariesComponent activity={this.state.currentActivity} onBeneficiariesUpdate={this.handleBeneficiariesChange} />
+                                </TabPane>
+
+                                <TabPane tab={<span><Icon type="mail" />Activity Comments</span>} key="5">
+                                    <CommentComponent activity={this.state.currentActivity} onCommentUpdate={this.handleCommentChange} />
                                 </TabPane>
                             </Tabs>
                         </Col>

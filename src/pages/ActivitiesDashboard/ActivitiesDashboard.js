@@ -4,7 +4,7 @@ import { Row, Col } from 'antd';
 import { Avatar } from 'antd';
 import { Layout } from 'antd';
 import { Card } from 'antd';
-import { Button, Modal, Form, Input, InputNumber, DatePicker, Dropdown, Menu } from 'antd';
+import { Button, Modal, Form, Input, InputNumber, DatePicker, Dropdown, Menu, message } from 'antd';
 const { Meta } = Card;
 const { Header, Footer, Content } = Layout;
 const FormItem = Form.Item;
@@ -96,6 +96,8 @@ const CollectionCreateForm = Form.create()(
 );
 
 
+
+
 class ActivitiesDashboard extends React.Component {
 
     constructor(props) {
@@ -109,6 +111,11 @@ class ActivitiesDashboard extends React.Component {
     }
 
 
+    loading = () => {
+        const hide = message.loading('Action in progress..', 0);
+        // Dismiss manually and asynchronously
+        setTimeout(hide, 1000);
+      };
 
     showModal = () => {
         this.setState({
@@ -132,6 +139,7 @@ class ActivitiesDashboard extends React.Component {
 
     handleCreate = () => {
         const form = this.form;
+        this.loading()
 
         form.validateFields((err, fieldsValue) => {
             if (err) {

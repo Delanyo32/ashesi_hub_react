@@ -78,53 +78,39 @@ class Info extends React.Component {
     // }
 
 
-    userFilledInfo() {
-        this.props.stitch.then(stitch => {
-            let db = stitch.service("mongodb", "mongodb-atlas").db("hub");
-
-            let users = db.collection("users");
-            const { history } = this.props;
-
-            users.find({ "owner_id": stitch.authedId() }, null).execute().then((data) => {
-                if (data[0]) {
-                    history.push('/activities')
-                }
-
-            })
-        })
-
-    }
-
-
     sendData() {
         const { history } = this.props;
-
-        this.props.stitch.then(stitch => {
-            let db = stitch.service("mongodb", "mongodb-atlas").db("hub");
-
-            let users = db.collection("users");
-
-            let obj = this.state
-
-            obj["owner_id"] = stitch.authedId()
-
-            //console.log(obj)
-
-            users.insertOne(obj).then(() => {
-                console.log("inserted:")
-                if (this.state.applicationStatus === "yes") {
-                    history.push('/projectInformation')
-                } else {
-                    history.push('/activities')
-                }
-
-
-            })
-                .catch(err => {
-                    this.error(err.message)
+        if (this.state.fullName !=="" && this.state.project.projectName !=="" && this.state.applicationStatus !=="") {
+            this.props.stitch.then(stitch => {
+                let db = stitch.service("mongodb", "mongodb-atlas").db("hub");
+    
+                let users = db.collection("users");
+    
+                let obj = this.state
+    
+                obj["owner_id"] = stitch.authedId()
+    
+                //console.log(obj)
+    
+                users.insertOne(obj).then(() => {
+                    this.success("Well Done!!!")
+                    if (this.state.applicationStatus === "yes") {
+                        history.push('/projectInformation')
+                    } else {
+                        history.push('/activities')
+                    }
+    
+    
                 })
-
-        })
+                    .catch(err => {
+                        this.error(err.message)
+                    })
+    
+            })
+        }else{
+            this.error("Please fill out all the information on this form")
+        }
+        
     }
 
 

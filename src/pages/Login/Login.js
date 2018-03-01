@@ -45,10 +45,11 @@ class Login extends React.Component {
 
     errormodal = (text) => toast.error(text);
     success = (text) => toast.success(text)
+    notify = (text) => toast(text);
 
     login() {
         // 
-        this.success("logging you in....")
+        this.notify("logging you in....")
         const { history } = this.props;
         this.props.stitch.then(stitch => {
             stitch.login(this.state.email, this.state.password, {})

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Form, Modal, Input, InputNumber, Icon } from 'antd';
+import { Table, Button, Form, Modal, Input, InputNumber, Icon , message } from 'antd';
 import { Row, Col } from 'antd';
 const FormItem = Form.Item;
 
@@ -74,6 +74,12 @@ class SpendingComponent extends Component {
         this.handleCreate=this.handleCreate.bind(this)
     }
 
+    loading = () => {
+        const hide = message.loading('Action in progress..', 0);
+        // Dismiss manually and asynchronously
+        setTimeout(hide, 1000);
+      };
+
     showModal = () => {
         this.setState({
             visible: true,
@@ -96,6 +102,7 @@ class SpendingComponent extends Component {
 
     handleCreate = () => {
         const form = this.form;
+        this.loading()
 
 
         form.validateFields((err, values) => {
