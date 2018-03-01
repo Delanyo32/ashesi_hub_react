@@ -74,7 +74,7 @@ class UpdatesComponent extends Component {
 
                 </Col>
                 <Col span={8}>
-                    <Card title="Activity Infromation"
+                    <Card title="Activity Information"
                     >
                         <p style={p_title}>Activity Name</p>
                         <p style={p_value}>{this.props.activity.activityName}</p>
@@ -85,7 +85,7 @@ class UpdatesComponent extends Component {
 
                 <Col span={8}>
 
-                    <Card title="Activity Infromation"
+                    <Card title="Activity Information"
                     >
                         <p style={p_title}>Activity Budget</p>
                         <p style={p_value}>${this.props.activity.activityAmount}</p>
