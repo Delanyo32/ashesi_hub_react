@@ -94,6 +94,7 @@ class VolunteerComponent extends Component {
             }else{
                 var newVolunteersArray = []
             }
+            values['timestamp'] = Date.now()
             
             newVolunteersArray.push(values)
             this.props.onVolunteerUpdate(newVolunteersArray)

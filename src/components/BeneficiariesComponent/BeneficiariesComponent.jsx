@@ -105,6 +105,7 @@ class BeneficiariesComponent extends Component {
             }else{
                 var newBeneficiariesArray = []
             }
+            values['timestamp'] = Date.now()
             
             newBeneficiariesArray.push(values)
             this.props.onBeneficiariesUpdate(newBeneficiariesArray)

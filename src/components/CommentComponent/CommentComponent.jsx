@@ -51,9 +51,12 @@ class CommentComponent extends Component {
     }
 
     sortComments = (commetsArray)=>{
-        return commetsArray.sort((a,b)=>{
-            return  b.timestamp - a.timestamp
-        })
+        if(commetsArray){
+            return commetsArray.sort((a,b)=>{
+                return  b.timestamp - a.timestamp
+            })
+        }
+ 
     }
 
 

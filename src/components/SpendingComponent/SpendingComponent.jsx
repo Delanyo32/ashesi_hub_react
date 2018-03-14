@@ -117,7 +117,7 @@ class SpendingComponent extends Component {
             }else{
                 newSpendingArray = []
             }
-            
+            values['timestamp'] = Date.now()
             newSpendingArray.push(values)
             this.props.onSpendingUpdate(newSpendingArray)
             form.resetFields();
