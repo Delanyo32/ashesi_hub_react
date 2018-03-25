@@ -5,6 +5,8 @@ import logo from './Logo [dark].svg';
 import LoginInput from '../../components/LoginInput/LoginInput'
 import LoginFooter from '../../components/LoginFooter/LoginFooter'
 import { ToastContainer, toast } from 'react-toastify';
+import { Modal, Button,Input  } from 'antd';
+
 
 
 class Login extends React.Component {
@@ -13,12 +15,47 @@ class Login extends React.Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            resetEmail:'',
+            visible: false
         };
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
     }
 
+    onChangeEmailAddress = (e) =>{
+        this.setState({resetEmail:e.target.value})
+    }
+
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    }
+
+    handleOk = (e) => {
+        //console.log(e);
+        this.props.stitch.then(stitch => {
+            stitch.auth.provider('userpass').sendPasswordReset(this.state.resetEmail)
+            .then(() => {
+                this.success("Successfully sent password reset link!");
+            })
+            .catch(err => {
+                this.errormodal("Error sending password reset link:", err);
+            });
+        })
+        this.setState({
+            visible: false,
+        });
+    }
+
+    handleCancel = (e) => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    }
+    
     handlePasswordChange(text) {
         this.setState({
             password: text
@@ -78,7 +115,7 @@ class Login extends React.Component {
 
     render() {
         //this.props.stitch.auth.providers.userpass.sendEmailConfirm('atoacquaah@yahoo.com').catch((error)=>{console.log(error.error)})
-        
+
         const page = (
 
             <div className={styles.body}>
@@ -94,6 +131,15 @@ class Login extends React.Component {
                         <LoginInput value={this.state.email} label="email" onInputTextChange={this.handleEmailChange} />;
                         <span className={styles.signupText}>no account yet? <a className={styles.signupText__link} href='/signUp'>sign up</a></span>
                         <LoginInput value={this.state.password} label="password" onInputTextChange={this.handlePasswordChange} />;
+                        <span className={styles.signupText_2}>Forgot Password? <a className={styles.signupText__link} onClick={this.showModal}>reset password</a></span>
+                        <Modal
+                            title="Reset Password"
+                            visible={this.state.visible}
+                            onOk={this.handleOk}
+                            onCancel={this.handleCancel}
+                        >
+                        <Input placeholder="Email Address" onChange={this.onChangeEmailAddress}/>
+                        </Modal>
                         <input id="submit" className={styles.submit_button} type="button" value="Begin" onClick={() => this.login()}></input>
                     </form>
                 </div>

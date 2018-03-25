@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import Milestones from './pages/Milestones/Milestones'
 import ActivitiesDashboard from './pages/ActivitiesDashboard/ActivitiesDashboard'
 import ActivityPage from './pages/ActivityPage/ActivityPage'
+import PasswordReset from './pages/PasswordReset/passwordReset'
 
 
 class Main extends React.Component{
@@ -22,6 +23,7 @@ class Main extends React.Component{
         <Switch>
           <Route exact path='/' render={(props) => <Login {...props} stitch={this.props.stitch}/>}/>
           <Route path='/signUp' render={(props) => <SignUp {...props} stitch={this.props.stitch}/>}/>
+          <Route path='/reset' render={(props) => <PasswordReset {...props} stitch={this.props.stitch}/>}/>
           <Route path='/info'  render={(props) => <Info {...props} stitch={this.props.stitch}/>}/>
           <Route path='/done'  render={(props) => <DoneSignUp {...props} stitch={this.props.stitch}/>}/>
           <Route path='/projectInformation'  render={(props) => <ProjectInformation {...props} stitch={this.props.stitch}/>}/>
