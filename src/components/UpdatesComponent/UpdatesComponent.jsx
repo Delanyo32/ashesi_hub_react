@@ -38,8 +38,8 @@ class UpdatesComponent extends Component {
     renderDate = (date)=>{
         var dd = ""
         if(date){
-            dd  = date[0]+" "+date[1]
-            
+            var moment = require('moment');
+            dd  = moment(date.startDate).format("MM/DD/YYYY")+" - "+moment(date.endDate).format("MM/DD/YYYY")
         }
         return dd
     }

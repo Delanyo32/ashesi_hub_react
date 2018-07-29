@@ -11,6 +11,7 @@ import VolunteerComponent from '../../components/VolunteerComponent/VolunteerCom
 import UpdatesComponent from '../../components/UpdatesComponent/UpdatesComponent'
 import BeneficiariesComponent from '../../components/BeneficiariesComponent/BeneficiariesComponent'
 import CommentComponent from '../../components/CommentComponent/CommentComponent'
+import ReflectionsComponent from '../../components/ReflectionsComponent/ReflectionsComponent'
 const TabPane = Tabs.TabPane;
 const { Meta } = Card;
 const { Header, Footer, Content } = Layout;
@@ -167,6 +168,12 @@ class ActivityPage extends React.Component {
         this.saveActivityUpdate(newActivitiy, "volunteer")
     }
 
+    handleReflectionChange = (reflectionsArray)=>{
+        var newActivitiy = Object.assign({}, this.state.currentActivity)
+        newActivitiy.reflections = reflectionsArray
+        this.saveActivityUpdate(newActivitiy, "reflection")
+    }
+
     handleCommentChange = (comment)=>{
         var newcoment = {
             comment:comment,
@@ -289,6 +296,9 @@ class ActivityPage extends React.Component {
 
                                 <TabPane tab={<span><Icon type="mail" />Activity Comments</span>} key="5">
                                     <CommentComponent activity={this.state.currentActivity} onCommentUpdate={this.handleCommentChange} />
+                                </TabPane>
+                                <TabPane tab={<span><Icon type="mail" />Activity Reflections</span>} key="6">
+                                    <ReflectionsComponent activity={this.state.currentActivity} onReflectionUpdate={this.handleReflectionChange} />
                                 </TabPane>
                             </Tabs>
                         </Col>

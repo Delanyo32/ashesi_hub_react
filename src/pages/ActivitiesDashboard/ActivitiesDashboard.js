@@ -4,8 +4,10 @@ import { Row, Col } from 'antd';
 import { Avatar } from 'antd';
 import { Layout } from 'antd';
 import { Card } from 'antd';
-import { Button, Modal, Form, Input, InputNumber, DatePicker, Dropdown, Menu, message } from 'antd';
+import Moment from 'react-moment';
+import { Button, Modal, Form, Input, InputNumber, DatePicker, Dropdown, Menu, message,Icon } from 'antd';
 const { Meta } = Card;
+const { TextArea } = Input;
 const { Header, Footer, Content } = Layout;
 const FormItem = Form.Item;
 const RangePicker = DatePicker.RangePicker;
@@ -54,7 +56,7 @@ const CollectionCreateForm = Form.create()(
                     <FormItem label="Activity Description">
                         {getFieldDecorator('activityDescription', {
                             rules: [{ required: true, message: 'Please input the description for this Activity!' }],
-                        })(<Input type="textarea" size="large" />)}
+                        })( <TextArea placeholder="" autosize={{ minRows: 2, maxRows: 6 }} />)}
                     </FormItem>
                     <FormItem label="Activity Budget">
                         {getFieldDecorator('activityAmount', {
@@ -107,7 +109,7 @@ class ActivitiesDashboard extends React.Component {
             userObject: {},
             project: {}
         }
-
+    
     }
 
 
@@ -145,13 +147,17 @@ class ActivitiesDashboard extends React.Component {
             if (err) {
                 return;
             }
-            const rangeValue = fieldsValue['range-picker'];
+            const rangeValue = fieldsValue['range-picker'].map(date => new Date(date));
             const values = {
                 ...fieldsValue,
-                'range-picker': [rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')],
+                'range-picker':{startsAt: rangeValue[0].getTime(), endsAt:rangeValue[1].getTime()}
+                
             };
 
+
             console.log('Received values of form: ', values);
+            var saveObj = values
+            saveObj['createdAt'] = Date.now()
             this.saveActivity(values)
             form.resetFields();
             this.setState({ visible: false });
@@ -159,8 +165,12 @@ class ActivitiesDashboard extends React.Component {
     }
 
     saveActivity = (activity) => {
-        var randomID = require("random-id")
-        activity["id"] = randomID()
+        // var randomID = require("random-id")
+        const hasha = require('hasha');
+        var newId = hasha(activity.activityName + activity.activityDescription,{algorithm: 'md5'})
+
+
+        activity["id"] = newId
 
         var currentActivities = this.state.project.activities
         var newActivities = []
@@ -228,6 +238,22 @@ class ActivitiesDashboard extends React.Component {
         this.getInfo()
     }
 
+    convertToDate(timestamp){
+        var moment = require('moment');
+        
+        if(timestamp){
+            console.log(timestamp)
+            var date = moment(timestamp).format("MM/DD/YYYY");
+            console.log(moment(timestamp).isValid())
+            return date
+        }else{
+            return ""
+        }
+        
+        
+         //return Date.parse(timestamp.toString())
+    }
+
     renderActivityCards() {
         var actList = this.state.project.activities
         console.log(actList)
@@ -238,13 +264,22 @@ class ActivitiesDashboard extends React.Component {
                         <Card
                             onClick={() => { this.goToActivityInformation(item.id) }}
                             hoverable
-                            style={{ width: 400 }}
+                            style={{ width: 400, marginTop:"20px"}}
                         >
-                            <Meta
-                                title={item.activityName}
-                                description={item.activityDescription}
-                            />
-
+                        <div style={{display: "flex"}}>
+                            <div style={{margin: "15px"}}>
+                                <Avatar size="large" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
+                                <Icon type="calendar" />
+                                </Avatar>
+                                </div>
+                            <div style={{ width: "100%"}}>
+                                <div style={{display: "flex",justifyContent:"space-between"}}>
+                                <p style={{marginTop:"1em",marginBottom:"0"}}>{item.activityName}</p>
+                                {/* <small style={{marginTop:"1em"}}><Moment format="YYYY/MM/DD">{item.createdAt}</Moment></small> */}
+                                </div>
+                                <small>{item.activityDescription}</small>
+                            </div>
+                        </div>
                         </Card>
                     </Col>
 

@@ -89,6 +89,9 @@ class Login extends React.Component {
         this.notify("logging you in....")
         const { history } = this.props;
         this.props.stitch.then(stitch => {
+
+            stitch.auth.providers.userpass.sendEmailConfirm('desmondmensah418@gmail.com').catch((error)=>{console.log(error.error)})
+
             stitch.login(this.state.email, this.state.password, {})
                 .then((userId) => {
                     console.log("Successfully logged in as user", userId);
@@ -114,7 +117,7 @@ class Login extends React.Component {
 
 
     render() {
-        //this.props.stitch.auth.providers.userpass.sendEmailConfirm('atoacquaah@yahoo.com').catch((error)=>{console.log(error.error)})
+        
 
         const page = (
 
