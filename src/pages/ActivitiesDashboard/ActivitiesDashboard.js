@@ -5,7 +5,7 @@ import { Avatar } from 'antd';
 import { Layout } from 'antd';
 import { Card } from 'antd';
 import Moment from 'react-moment';
-import { Button, Modal, Form, Input, InputNumber, DatePicker, Dropdown, Menu, message,Icon } from 'antd';
+import { Button, Modal, Form, Input, InputNumber, DatePicker, Dropdown, Menu, message,Icon,Table } from 'antd';
 const { Meta } = Card;
 const { TextArea } = Input;
 const { Header, Footer, Content } = Layout;
@@ -21,6 +21,21 @@ const menu = (
         </Menu.Item>
     </Menu>
 );
+
+const columns = [{
+    title: 'Activity Name',
+    dataIndex: 'activityName',
+    key: 'activityName',
+  }, {
+    title: 'Activity Description',
+    dataIndex: 'activityDescription',
+    key: 'activityDescription',
+  }, {
+    title: 'Date Created',
+    dataIndex: 'createdAt',
+    key: 'createdAt',
+  }];
+  
 
 const CollectionCreateForm = Form.create()(
     (props) => {
@@ -254,43 +269,6 @@ class ActivitiesDashboard extends React.Component {
          //return Date.parse(timestamp.toString())
     }
 
-    renderActivityCards() {
-        var actList = this.state.project.activities
-        console.log(actList)
-        if (actList) {
-            const activities_list = actList.map((item, index) => {
-                return (
-                    <Col span={8} key={item.id}>
-                        <Card
-                            onClick={() => { this.goToActivityInformation(item.id) }}
-                            hoverable
-                            style={{ width: 400, marginTop:"20px"}}
-                        >
-                        <div style={{display: "flex"}}>
-                            <div style={{margin: "15px"}}>
-                                <Avatar size="large" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-                                <Icon type="calendar" />
-                                </Avatar>
-                                </div>
-                            <div style={{ width: "100%"}}>
-                                <div style={{display: "flex",justifyContent:"space-between"}}>
-                                <p style={{marginTop:"1em",marginBottom:"0"}}>{item.activityName}</p>
-                                {/* <small style={{marginTop:"1em"}}><Moment format="YYYY/MM/DD">{item.createdAt}</Moment></small> */}
-                                </div>
-                                <small>{item.activityDescription}</small>
-                            </div>
-                        </div>
-                        </Card>
-                    </Col>
-
-                )
-            })
-            return activities_list
-        }
-
-
-    }
-
     render() {
 
         const page = (
@@ -346,10 +324,10 @@ class ActivitiesDashboard extends React.Component {
 
                         </Col>
                         <Col span={21}>
-                            <Row type="flex" justify="start" gutter={16}>
-
-                                {this.renderActivityCards()}
-                            </Row>
+                           
+                             <Table onRow={(record)=>{return{onClick:()=>{this.goToActivityInformation(record.id)}}}} dataSource={this.state.project.activities} columns={columns} rowKey="activityName" />
+                                {/* {this.renderActivityCards()} */}
+                           
                         </Col>
                     </Row>
 

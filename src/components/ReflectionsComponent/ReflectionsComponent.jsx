@@ -31,7 +31,7 @@ class ReflectionsComponent extends Component {
 
     save(){
         if(this.props.activity.reflections){
-            var newReflectionsArray = this.props.activity.volunteers.slice()
+            var newReflectionsArray = this.props.activity.reflections.slice()
         }else{
             var newReflectionsArray = []
         }

@@ -44,6 +44,7 @@ class ActivityPage extends React.Component {
         this.handleSpendingChange = this.handleSpendingChange.bind(this)
         this.handleVolunteersChange = this.handleVolunteersChange.bind(this)
         this.handleBeneficiariesChange = this.handleBeneficiariesChange.bind(this)
+        this.handleEditActivityChange = this.handleEditActivityChange.bind(this)
 
     }
     doRefresh() {
@@ -174,6 +175,14 @@ class ActivityPage extends React.Component {
         this.saveActivityUpdate(newActivitiy, "reflection")
     }
 
+    handleEditActivityChange = (newActivity)=>{
+        console.log(newActivitiy)
+        var newActivitiy = newActivity
+        this.saveActivityUpdate(newActivitiy, "activity")
+    }
+
+    
+
     handleCommentChange = (comment)=>{
         var newcoment = {
             comment:comment,
@@ -281,7 +290,7 @@ class ActivityPage extends React.Component {
                             <div style={topM}></div>
                             <Tabs defaultActiveKey="1">
                                 <TabPane tab={<span><Icon type="calendar" />Activity Updates</span>} key="1">
-                                    <UpdatesComponent activity={this.state.currentActivity}></UpdatesComponent>
+                                    <UpdatesComponent activity={this.state.currentActivity} onActivityEdit={this.handleEditActivityChange} ></UpdatesComponent>
                                 </TabPane>
                                 <TabPane tab={<span><Icon type="wallet" />Activity Spending</span>} key="2">
                                     <SpendingComponent activity={this.state.currentActivity} onSpendingUpdate={this.handleSpendingChange}></SpendingComponent>
