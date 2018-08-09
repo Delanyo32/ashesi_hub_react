@@ -107,10 +107,32 @@ class SpendingComponent extends Component {
         this.state = {
             visible: false,
             editVisible: false,
-            selectedSpending: this.props.activity.spending[0]
+            selectedSpending: null
         }
         this.handleCreate = this.handleCreate.bind(this)
         this.handleEdit = this.handleEdit.bind(this)
+    }
+
+    componentDidMount(){
+        if(this.props.activity.spending){
+            this.setState({
+                selectedSpending:this.props.activity.spending[0]
+            })
+        }
+    }
+
+    renderEditForm(){
+        if(this.state.selectedSpending){
+            return(
+                <CollectionEditForm
+                        ref={this.editFormRef}
+                        visible={this.state.editVisible}
+                        onCancel={this.handleCancel}
+                        onCreate={this.handleEdit}
+                        data={this.state.selectedSpending}
+                    />
+            )
+        }
     }
 
     loading = () => {
@@ -240,13 +262,7 @@ class SpendingComponent extends Component {
                         bordered
                         title={() => 'Spending Table'}
                     />
-                    <CollectionEditForm
-                        ref={this.editFormRef}
-                        visible={this.state.editVisible}
-                        onCancel={this.handleCancel}
-                        onCreate={this.handleEdit}
-                        data={this.state.selectedSpending}
-                    />
+                    {this.renderEditForm()}
                 </Col>
             </Row>
         );

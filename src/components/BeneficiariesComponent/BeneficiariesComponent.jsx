@@ -91,9 +91,31 @@ class BeneficiariesComponent extends Component {
         this.state = {
             visible: false,
             editVisible: false,
-            selectedBeneficiary: this.props.activity.beneficiaries[0]
+            selectedBeneficiary:null
         }
         this.handleCreate = this.handleCreate.bind(this)
+    }
+
+    componentDidMount(){
+        if(this.props.activity.beneficiaries){
+            this.setState({
+                selectedBeneficiary:this.props.activity.beneficiaries[0]
+            })
+        }
+    }
+
+    renderEditForm(){
+        if(this.state.selectedBeneficiary){
+            return(
+                <CollectionEditForm
+                        ref={this.editFormRef}
+                        visible={this.state.editVisible}
+                        onCancel={this.handleCancel}
+                        onCreate={this.handleEdit}
+                        data={this.state.selectedBeneficiary}
+                    />
+            )
+        }
     }
 
     editFormRef = (editForm) => {
@@ -223,14 +245,7 @@ class BeneficiariesComponent extends Component {
                         bordered
                         title={() => 'Beneficiaries'}
                     />
-                    <CollectionEditForm
-
-                        ref={this.editFormRef}
-                        visible={this.state.editVisible}
-                        onCancel={this.handleCancel}
-                        onCreate={this.handleEdit}
-                        data={this.state.selectedBeneficiary}
-                    />
+                    {this.renderEditForm()}
                 </Col>
             </Row>
         );

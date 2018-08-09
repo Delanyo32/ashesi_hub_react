@@ -79,11 +79,32 @@ class VolunteerComponent extends Component {
         this.state = {
             visible: false,
             editVisible: false,
-            selectedVolunteer: this.props.activity.volunteers[0]
+            selectedVolunteer:null
         }
         this.handleCreate = this.handleCreate.bind(this)
     }
 
+    componentDidMount(){
+        if(this.props.activity.volunteers){
+            this.setState({
+                selectedVolunteer:this.props.activity.volunteers[0]
+            })
+        }
+    }
+
+    renderEditForm(){
+        if(this.state.selectedVolunteer){
+            return(
+                <CollectionEditForm
+                        ref={this.editFormRef}
+                        visible={this.state.editVisible}
+                        onCancel={this.handleCancel}
+                        onCreate={this.handleEdit}
+                        data={this.state.selectedVolunteer}
+                    />
+            )
+        }
+    }
 
     editFormRef = (editForm) => {
         this.editForm = editForm;
@@ -214,14 +235,7 @@ class VolunteerComponent extends Component {
                         bordered
                         title={() => 'Volunteers'}
                     />
-
-                    <CollectionEditForm
-                        ref={this.editFormRef}
-                        visible={this.state.editVisible}
-                        onCancel={this.handleCancel}
-                        onCreate={this.handleEdit}
-                        data={this.state.selectedVolunteer}
-                    />
+                    {this.renderEditForm()}
                 </Col>
             </Row>
         );
