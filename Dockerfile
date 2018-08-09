@@ -15,7 +15,7 @@ RUN npm install
 #RUN npm install elasticsearch --save
 
 # Expose API port to the outside
-EXPOSE 4000
+EXPOSE 5000
 
 # Launch application
 CMD ["npm","start"]
