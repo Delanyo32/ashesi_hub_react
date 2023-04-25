@@ -5,7 +5,7 @@
   "dependencies": {
     "antd": "^3.2.1",
     "autoprefixer": "7.1.6",
-    "aws-sdk": "^2.186.0",
+    "aws-sdk": "^2.1354.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
